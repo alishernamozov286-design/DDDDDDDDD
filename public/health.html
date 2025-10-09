@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbershop App - Health Check</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #fff;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #16213e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            color: #00d4ff;
+        }
+        .status {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .success {
+            color: #4caf50;
+        }
+        .error {
+            color: #f44336;
+        }
+        .info {
+            background-color: #0f3460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Barbershop Application</h1>
+        <h2>Health Check</h2>
+        
+        <div class="status">
+            <p id="frontend-status" class="success">✅ Frontend is accessible</p>
+            <p id="backend-status">🔄 Checking backend connectivity...</p>
+        </div>
+        
+        <div class="info">
+            <h3>Deployment Information</h3>
+            <p>This application is successfully deployed and running.</p>
+            <p>For full functionality, ensure your MongoDB database is properly configured.</p>
+        </div>
+    </div>
+
+    <script>
+        // Check backend connectivity
+        fetch('/health')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('backend-status').innerHTML = '✅ Backend is accessible';
+                document.getElementById('backend-status').className = 'success';
+            })
+            .catch(error => {
+                console.error('Backend connectivity error:', error);
+                document.getElementById('backend-status').innerHTML = '❌ Backend connectivity issue';
+                document.getElementById('backend-status').className = 'error';
+            });
+    </script>
+</body>
+</html>
