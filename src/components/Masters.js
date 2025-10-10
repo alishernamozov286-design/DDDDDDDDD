@@ -601,7 +601,7 @@ const Masters = () => {
 
   const fetchMasters = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/masters');
+      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/masters');
       setMasters(response.data);
     } catch (error) {
       console.error('Error loading masters:', error);

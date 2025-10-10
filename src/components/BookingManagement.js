@@ -366,7 +366,7 @@ const BookingManagement = () => {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/bookings');
+      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/bookings');
       setBookings(response.data);
     } catch (error) {
       showAlert('Xatolik yuz berdi: ' + error.message, 'error');
@@ -377,7 +377,7 @@ const BookingManagement = () => {
 
   const fetchMasters = async () => {
     try {
-      const response = await axios.get('/api/masters');
+      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/masters');
       setMasters(response.data);
     } catch (error) {
       console.error('Ustalarni yuklashda xatolik:', error);
@@ -386,7 +386,7 @@ const BookingManagement = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('/api/services');
+      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/services');
       setServices(response.data);
     } catch (error) {
       console.error('Xizmatlarni yuklashda xatolik:', error);
@@ -403,7 +403,7 @@ const BookingManagement = () => {
 
       
       setLoading(true);
-      await axios.patch('/api/bookings/' + id + '/status', { status });
+      await axios.patch('https://backend-1-1kq5.onrender.com/api/bookings/' + id + '/status', { status });
       showAlert(`Bron ${status === 'tasdiqlangan' ? 'tasdiqlandi' : 'bekor qilindi'}!`, 'success');
       fetchBookings();
     } catch (error) {
@@ -417,7 +417,7 @@ const BookingManagement = () => {
     if (window.confirm('Haqiqatan ham bu bronni o\'chirmoqchimisiz?')) {
       try {
         setLoading(true);
-        await axios.delete('/api/bookings/' + id);
+        await axios.delete('https://backend-1-1kq5.onrender.com/api/bookings/' + id);
         showAlert('Bron muvaffaqiyatli o\'chirildi!', 'success');
         fetchBookings();
       } catch (error) {

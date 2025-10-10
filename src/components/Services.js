@@ -584,7 +584,7 @@ const Services = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/services');
+      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/services');
       setServices(response.data);
     } catch (error) {
       console.error('Error loading services:', error);

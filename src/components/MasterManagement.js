@@ -697,7 +697,7 @@ const MasterManagement = () => {
   const fetchMasters = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5001/api/masters');
+      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/masters');
       setMasters(response.data);
     } catch (error) {
       showAlert('Xatolik yuz berdi: ' + error.message, 'error');
@@ -789,11 +789,11 @@ const MasterManagement = () => {
       
       if (editingId) {
         // Update existing master
-        await axios.put('http://localhost:5001/api/masters/' + editingId, dataToSend);
+        await axios.put('https://backend-1-1kq5.onrender.com/api/masters/' + editingId, dataToSend);
         showAlert("Usta muvaffaqiyatli yangilandi!", 'success');
       } else {
         // Create new master
-        await axios.post('http://localhost:5001/api/masters', dataToSend);
+        await axios.post('https://backend-1-1kq5.onrender.com/api/masters', dataToSend);
         showAlert("Yangi usta muvaffaqiyatli qo'shildi!", 'success');
       }
       
@@ -837,7 +837,7 @@ const MasterManagement = () => {
     
     try {
       setLoading(true);
-      await axios.delete('http://localhost:5001/api/masters/' + id);
+      await axios.delete('https://backend-1-1kq5.onrender.com/api/masters/' + id);
       showAlert("Usta muvaffaqiyatli o'chirildi!", 'success');
       fetchMasters();
     } catch (error) {
