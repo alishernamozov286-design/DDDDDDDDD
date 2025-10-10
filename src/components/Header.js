@@ -65,9 +65,10 @@ const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap;
 
   @media (max-width: 768px) {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 `;
 
@@ -84,6 +85,7 @@ const Logo = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  white-space: nowrap;
 
   &:hover {
     transform: scale(1.05);
@@ -138,13 +140,27 @@ const Logo = styled.div`
 const Nav = styled.nav`
   display: flex;
   gap: 1.8rem;
+  flex-wrap: nowrap;
+  align-items: center;
+  position: relative;
+
+  /* Bottom border for the entire navbar */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(106, 17, 203, 0.6);
+  }
 
   @media (max-width: 1200px) {
     gap: 1.5rem;
   }
 
   @media (max-width: 992px) {
-    gap: 1.2rem;
+    gap: 1rem;
   }
 
   @media (max-width: 768px) {
@@ -168,6 +184,8 @@ const NavItem = styled(Link)`
   gap: 8px;
   font-size: 1.05rem;
   line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
 
   svg {
     font-size: 1.1rem;
@@ -192,6 +210,19 @@ const NavItem = styled(Link)`
     background: rgba(106, 17, 203, 0.4);
   }
 
+  /* Even thicker white underline indicator for active section */
+  &.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; /* Align with navbar bottom border */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 8px; /* Increased thickness from 5px to 8px */
+    background: #ffffff; /* White color */
+    border-radius: 4px; /* Increased border radius to match */
+  }
+
   @media (max-width: 1200px) {
     padding: 0.6rem 1rem;
     font-size: 1rem;
@@ -199,7 +230,19 @@ const NavItem = styled(Link)`
 
   @media (max-width: 992px) {
     padding: 0.5rem 0.8rem;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 850px) {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.85rem;
+    gap: 6px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.8rem;
+    gap: 5px;
   }
 `;
 
@@ -218,11 +261,14 @@ const LogoutButton = styled.button`
   justify-content: center;
   gap: 8px;
   font-size: 1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 
   svg {
     vertical-align: middle;
     position: relative;
     top: -1px;
+    font-size: 0.9rem;
   }
 
   &:hover {
@@ -235,9 +281,20 @@ const LogoutButton = styled.button`
     transform: translateY(-1px);
   }
 
-  @media (max-width: 992px) {
+  @media (max-width: 1200px) {
     padding: 0.6rem 1.2rem;
     font-size: 0.95rem;
+  }
+
+  @media (max-width: 992px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 850px) {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    gap: 6px;
   }
 
   @media (max-width: 768px) {
@@ -310,6 +367,7 @@ const MobileNavItem = styled(Link)`
   gap: 10px;
   font-size: 1.2rem;
   line-height: 1;
+  position: relative;
 
   svg {
     font-size: 1.3rem;
@@ -327,6 +385,19 @@ const MobileNavItem = styled(Link)`
   &.active {
     color: #a0c4ff;
     background: rgba(106, 17, 203, 0.4);
+  }
+
+  /* Underline indicator for active section in mobile menu */
+  &.active::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    border-radius: 2px;
   }
   
   @media (max-width: 576px) {
@@ -431,22 +502,22 @@ const Header = ({ onLogout }) => {
         </Logo>
 
         <Nav>
-          <NavItem to="hero" smooth duration={500}>
+          <NavItem to="hero" smooth duration={500} spy activeClass="active">
             <FaHome /> Bosh sahifa
           </NavItem>
-          <NavItem to="about" smooth duration={500}>
+          <NavItem to="about" smooth duration={500} spy activeClass="active">
             <FaInfoCircle /> Biz haqimizda
           </NavItem>
-          <NavItem to="services" smooth duration={500}>
+          <NavItem to="services" smooth duration={500} spy activeClass="active">
             <FaCut /> Xizmatlar
           </NavItem>
-          <NavItem to="masters" smooth duration={500}>
+          <NavItem to="masters" smooth duration={500} spy activeClass="active">
             <FaUserTie /> Ustalar
           </NavItem>
-          <NavItem to="booking" smooth duration={500}>
+          <NavItem to="booking" smooth duration={500} spy activeClass="active">
             <FaCalendarAlt /> Bron qilish
           </NavItem>
-          <NavItem to="contact" smooth duration={500}>
+          <NavItem to="contact" smooth duration={500} spy activeClass="active">
             <FaPhone /> Aloqa
           </NavItem>
         </Nav>
@@ -461,22 +532,22 @@ const Header = ({ onLogout }) => {
 
         <MobileMenu isOpen={isMenuOpen}>
           <MobileNav>
-            <MobileNavItem to="hero" smooth duration={500} onClick={closeMenu}>
+            <MobileNavItem to="hero" smooth duration={500} onClick={closeMenu} spy activeClass="active">
               <FaHome /> Bosh sahifa
             </MobileNavItem>
-            <MobileNavItem to="about" smooth duration={500} onClick={closeMenu}>
+            <MobileNavItem to="about" smooth duration={500} onClick={closeMenu} spy activeClass="active">
               <FaInfoCircle /> Biz haqimizda
             </MobileNavItem>
-            <MobileNavItem to="services" smooth duration={500} onClick={closeMenu}>
+            <MobileNavItem to="services" smooth duration={500} onClick={closeMenu} spy activeClass="active">
               <FaCut /> Xizmatlar
             </MobileNavItem>
-            <MobileNavItem to="masters" smooth duration={500} onClick={closeMenu}>
+            <MobileNavItem to="masters" smooth duration={500} onClick={closeMenu} spy activeClass="active">
               <FaUserTie /> Ustalar
             </MobileNavItem>
-            <MobileNavItem to="booking" smooth duration={500} onClick={closeMenu}>
+            <MobileNavItem to="booking" smooth duration={500} onClick={closeMenu} spy activeClass="active">
               <FaCalendarAlt /> Bron qilish
             </MobileNavItem>
-            <MobileNavItem to="contact" smooth duration={500} onClick={closeMenu}>
+            <MobileNavItem to="contact" smooth duration={500} onClick={closeMenu} spy activeClass="active">
               <FaPhone /> Aloqa
             </MobileNavItem>
             <MobileLogoutButton

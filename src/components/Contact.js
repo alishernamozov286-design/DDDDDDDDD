@@ -505,7 +505,7 @@ const Contact = () => {
             </InfoIcon>
             <InfoContent>
               <InfoLabel><FaPhone /> Telefon</InfoLabel>
-              <InfoValue>+998 93 123 45 67</InfoValue>
+              <InfoValue>+998 77 143 53 51</InfoValue>
             </InfoContent>
           </InfoItem>
           
@@ -526,8 +526,7 @@ const Contact = () => {
             <InfoContent>
               <InfoLabel><FaClock /> Ish vaqti</InfoLabel>
               <InfoValue>
-                Dushanba - Shanba: 9:00 - 20:00<br />
-                Yakshanba: 10:00 - 18:00
+                Dushanba - Yakshanba: 06:00 - 23:00<br />
               </InfoValue>
             </InfoContent>
           </InfoItem>

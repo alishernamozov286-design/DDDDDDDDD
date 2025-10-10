@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { FaUser, FaPhone, FaCalendarAlt, FaClock, FaCut, FaUserTie, FaCheckCircle, FaExclamationTriangle, FaInfoCircle, FaEnvelope } from 'react-icons/fa';
+import { FaUser, FaPhone, FaCalendarAlt, FaClock, FaCut, FaUserTie, FaCheckCircle, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
 
 const BookingSection = styled.section`
   padding: 120px 20px;
@@ -770,7 +770,6 @@ const BookingForm = () => {
   const [formData, setFormData] = useState({
     customerName: '',
     customerPhone: '',
-    customerEmail: '',
     serviceId: '',
     masterId: '',
     appointmentDate: '',
@@ -1013,6 +1012,16 @@ const BookingForm = () => {
     }
   };
 
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    // Remove any non-digit characters
+    const digitsOnly = value.replace(/\D/g, '');
+    // Limit to 9 digits maximum
+    if (digitsOnly.length <= 9) {
+      setFormData(prev => ({ ...prev, customerPhone: digitsOnly }));
+    }
+  };
+
   const handleTimeSelect = (time) => {
     setFormData(prev => ({
       ...prev,
@@ -1027,6 +1036,12 @@ const BookingForm = () => {
     if (!formData.customerName || !formData.customerPhone || !formData.serviceId || 
         !formData.masterId || !formData.appointmentDate || !formData.appointmentTime) {
       setAlert({ type: 'error', message: 'Iltimos, barcha maydonlarni to\'ldiring!' });
+      return;
+    }
+    
+    // Validate phone number length
+    if (formData.customerPhone.length !== 9) {
+      setAlert({ type: 'error', message: 'Telefon raqam 9 ta raqamdan iborat bo\'lishi kerak!' });
       return;
     }
     
@@ -1053,20 +1068,14 @@ const BookingForm = () => {
         totalPrice
       };
       
-      // Remove email field if it's empty
-      if (!bookingData.customerEmail) {
-        delete bookingData.customerEmail;
-      }
-      
       await axios.post('http://localhost:5001/api/bookings', bookingData);
       
       setAlert({ type: 'success', message: 'Buyurtma muvaffaqiyatli yaratildi!' });
       
-      // Reset form (excluding email field)
+      // Reset form
       setFormData({
         customerName: '',
         customerPhone: '',
-        customerEmail: '',
         serviceId: '',
         masterId: '',
         appointmentDate: '',
@@ -1130,27 +1139,9 @@ const BookingForm = () => {
                 id="customerPhone"
                 name="customerPhone"
                 value={formData.customerPhone}
-                onChange={(e) => setFormData(prev => ({ ...prev, customerPhone: e.target.value }))}
-                placeholder="+998 XX XXX XX XX"
-              />
-            </InputWrapper>
-          </FormGroup>
-          
-          <FormGroup>
-            <Label htmlFor="customerEmail">
-              <FaEnvelope /> Elektron pochta
-            </Label>
-            <InputWrapper>
-              <IconWrapper>
-                <FaEnvelope />
-              </IconWrapper>
-              <Input
-                type="email"
-                id="customerEmail"
-                name="customerEmail"
-                value={formData.customerEmail}
-                onChange={(e) => setFormData(prev => ({ ...prev, customerEmail: e.target.value }))}
-                placeholder="email@example.com"
+                onChange={handlePhoneChange}
+                placeholder="998901234567"
+                maxLength="9"
               />
             </InputWrapper>
           </FormGroup>

@@ -7,7 +7,6 @@ import Services from './components/Services';
 import Masters from './components/Masters';
 import BookingForm from './components/BookingForm';
 // Removed unused BookingList import
-import Footer from './components/Footer';
 import About from './components/About';
 import Contact from './components/Contact';
 import WelcomePage from './components/WelcomePage';
@@ -95,7 +94,7 @@ const AppContent = ({ userType, setUserType, showLoginAlert, handleUserTypeSelec
   // For single page scroll, we'll show all sections on the main route
   return (
     <>
-      {userType && userType !== 'admin' && <Header onLogout={handleLogout} />}
+      {userType && userType !== 'admin' && userType !== 'worker' && <Header onLogout={handleLogout} />}
       <Routes>
         <Route 
           path="/" 
@@ -124,7 +123,6 @@ const AppContent = ({ userType, setUserType, showLoginAlert, handleUserTypeSelec
                   <SectionWrapper id="contact">
                     <Contact />
                   </SectionWrapper>
-                  <Footer />
                 </div>
               )
             ) : (
@@ -137,7 +135,7 @@ const AppContent = ({ userType, setUserType, showLoginAlert, handleUserTypeSelec
           path="/admin" 
           element={<AdminDashboard onLogout={handleLogout} userType={userType} />} 
         />
-        {userType && userType !== 'admin' && (
+        {userType && userType !== 'admin' && userType !== 'worker' && (
           <>
             {/* Keep individual routes for direct access, but they'll redirect to home */}
             <Route path="/services" element={
@@ -160,7 +158,6 @@ const AppContent = ({ userType, setUserType, showLoginAlert, handleUserTypeSelec
                 <SectionWrapper id="contact">
                   <Contact />
                 </SectionWrapper>
-                <Footer />
               </div>
             } />
             <Route path="/masters" element={
@@ -183,7 +180,6 @@ const AppContent = ({ userType, setUserType, showLoginAlert, handleUserTypeSelec
                 <SectionWrapper id="contact">
                   <Contact />
                 </SectionWrapper>
-                <Footer />
               </div>
             } />
             <Route path="/booking" element={
@@ -206,7 +202,6 @@ const AppContent = ({ userType, setUserType, showLoginAlert, handleUserTypeSelec
                 <SectionWrapper id="contact">
                   <Contact />
                 </SectionWrapper>
-                <Footer />
               </div>
             } />
             <Route path="/bookings" element={
@@ -229,7 +224,6 @@ const AppContent = ({ userType, setUserType, showLoginAlert, handleUserTypeSelec
                 <SectionWrapper id="contact">
                   <Contact />
                 </SectionWrapper>
-                <Footer />
               </div>
             } />
             <Route path="/about" element={
@@ -252,7 +246,6 @@ const AppContent = ({ userType, setUserType, showLoginAlert, handleUserTypeSelec
                 <SectionWrapper id="contact">
                   <Contact />
                 </SectionWrapper>
-                <Footer />
               </div>
             } />
             <Route path="/contact" element={
@@ -275,7 +268,6 @@ const AppContent = ({ userType, setUserType, showLoginAlert, handleUserTypeSelec
                 <SectionWrapper id="contact">
                   <Contact />
                 </SectionWrapper>
-                <Footer />
               </div>
             } />
           </>
