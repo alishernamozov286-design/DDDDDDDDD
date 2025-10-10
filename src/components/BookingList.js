@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 
 const BookingSection = styled.section`
   padding: 100px 0;
@@ -269,7 +270,7 @@ const BookingList = ({ refreshKey }) => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/bookings');
+      const response = await axios.get(`${BASE_URL}/api/bookings`);
       // Sort bookings by creation date (newest first)
       const sortedBookings = response.data.sort((a, b) => 
         new Date(b.createdAt) - new Date(a.createdAt)

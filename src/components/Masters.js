@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 import { FaUser, FaPhone, FaClock, FaStar, FaMedal, FaUserTie } from 'react-icons/fa';
 
 const MastersSection = styled.section`
@@ -601,7 +602,7 @@ const Masters = () => {
 
   const fetchMasters = async () => {
     try {
-      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/masters');
+      const response = await axios.get(`${BASE_URL}/api/masters`);
       setMasters(response.data);
     } catch (error) {
       console.error('Error loading masters:', error);

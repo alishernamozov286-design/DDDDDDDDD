@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
+const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 
 // Add shimmer animation for enhanced visual appeal
 const shimmer = keyframes`
@@ -366,7 +367,7 @@ const BookingManagement = () => {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/bookings');
+      const response = await axios.get(`${BASE_URL}/api/bookings`);
       setBookings(response.data);
     } catch (error) {
       showAlert('Xatolik yuz berdi: ' + error.message, 'error');
@@ -377,7 +378,7 @@ const BookingManagement = () => {
 
   const fetchMasters = async () => {
     try {
-      const response = await axios.get('/api/masters');
+      const response = await axios.get(`${BASE_URL}/api/masters`);
       setMasters(response.data);
     } catch (error) {
       console.error('Ustalarni yuklashda xatolik:', error);
@@ -386,7 +387,7 @@ const BookingManagement = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('/api/services');
+      const response = await axios.get(`${BASE_URL}/api/services`);
       setServices(response.data);
     } catch (error) {
       console.error('Xizmatlarni yuklashda xatolik:', error);
@@ -403,7 +404,7 @@ const BookingManagement = () => {
 
       
       setLoading(true);
-      await axios.patch('/api/bookings/' + id + '/status', { status });
+      await axios.patch(`${BASE_URL}/api/bookings/` + id + '/status', { status });
       showAlert(`Bron ${status === 'tasdiqlangan' ? 'tasdiqlandi' : 'bekor qilindi'}!`, 'success');
       fetchBookings();
     } catch (error) {
@@ -417,7 +418,7 @@ const BookingManagement = () => {
     if (window.confirm('Haqiqatan ham bu bronni o\'chirmoqchimisiz?')) {
       try {
         setLoading(true);
-        await axios.delete('/api/bookings/' + id);
+        await axios.delete(`${BASE_URL}/api/bookings/` + id);
         showAlert('Bron muvaffaqiyatli o\'chirildi!', 'success');
         fetchBookings();
       } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 
 const ManagementContainer = styled.div`
   padding: 20px;
@@ -352,7 +353,7 @@ const ServiceManagement = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/services');
+      const response = await axios.get(`${BASE_URL}/api/services`);
       setServices(response.data);
     } catch (error) {
       console.error('Error loading services:', error);
@@ -376,10 +377,10 @@ const ServiceManagement = () => {
     }
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:5001/api/services/${editingId}`, formData);
+        await axios.put(`${BASE_URL}/api/services/${editingId}`, formData);
         setSuccess('Xizmat muvaffaqiyatli yangilandi');
       } else {
-        await axios.post('http://localhost:5001/api/services', formData);
+        await axios.post(`${BASE_URL}/api/services`, formData);
         setSuccess("Xizmat muvaffaqiyatli qo'shildi");
       }
       setFormData({ name: '', description: '', price: '', duration: '', image: '' });
@@ -408,7 +409,7 @@ const ServiceManagement = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Haqiqatan ham bu xizmatni o'chirmoqchimisiz?")) {
       try {
-        await axios.delete(`http://localhost:5001/api/services/${id}`);
+        await axios.delete(`${BASE_URL}/api/services/${id}`);
         setSuccess("Xizmat muvaffaqiyatli o'chirildi");
         fetchServices();
         setTimeout(() => setSuccess(''), 3000);

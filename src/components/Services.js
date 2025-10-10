@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 import { FaCut, FaSoap, FaMagic } from 'react-icons/fa';
 
 // We'll use a different icon for beard and face since some icons don't exist in react-icons/fa
@@ -584,7 +585,7 @@ const Services = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/services');
+      const response = await axios.get(`${BASE_URL}/api/services`);
       setServices(response.data);
     } catch (error) {
       console.error('Error loading services:', error);

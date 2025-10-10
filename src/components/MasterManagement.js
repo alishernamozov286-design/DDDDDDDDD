@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import axios from 'axios';
+const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 
 // Enhanced shimmer animation with more sophisticated effect
 const shimmer = keyframes`
@@ -697,7 +698,7 @@ const MasterManagement = () => {
   const fetchMasters = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5001/api/masters');
+      const response = await axios.get(`${BASE_URL}/api/masters`);
       setMasters(response.data);
     } catch (error) {
       showAlert('Xatolik yuz berdi: ' + error.message, 'error');
@@ -789,11 +790,11 @@ const MasterManagement = () => {
       
       if (editingId) {
         // Update existing master
-        await axios.put('http://localhost:5001/api/masters/' + editingId, dataToSend);
+        await axios.put(`${BASE_URL}/api/masters/` + editingId, dataToSend);
         showAlert("Usta muvaffaqiyatli yangilandi!", 'success');
       } else {
         // Create new master
-        await axios.post('http://localhost:5001/api/masters', dataToSend);
+        await axios.post(`${BASE_URL}/api/masters`, dataToSend);
         showAlert("Yangi usta muvaffaqiyatli qo'shildi!", 'success');
       }
       
@@ -837,7 +838,7 @@ const MasterManagement = () => {
     
     try {
       setLoading(true);
-      await axios.delete('http://localhost:5001/api/masters/' + id);
+      await axios.delete(`${BASE_URL}/api/masters/` + id);
       showAlert("Usta muvaffaqiyatli o'chirildi!", 'success');
       fetchMasters();
     } catch (error) {
