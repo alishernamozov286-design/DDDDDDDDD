@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 import { FaUser, FaPhone, FaCalendarAlt, FaClock, FaCut, FaUserTie, FaCheckCircle, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
+const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 
 const BookingSection = styled.section`
   padding: 120px 20px;

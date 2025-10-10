@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 import { FaCut, FaSoap, FaMagic } from 'react-icons/fa';
+import { GiBeard, GiFaceToFace } from 'react-icons/gi';
+const BASE_URL = 'https://backend-2-fkeh.onrender.com';
 
 // We'll use a different icon for beard and face since some icons don't exist in react-icons/fa
-import { GiBeard, GiFaceToFace } from 'react-icons/gi';
 
 const ServicesSection = styled.section`
   padding: 120px 20px;
