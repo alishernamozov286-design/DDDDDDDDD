@@ -787,7 +787,7 @@ const BookingForm = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/services');
+      const response = await axios.get('http://localhost:5001/api/services');
       setServices(response.data);
     } catch (error) {
       console.error('Error loading services:', error);
@@ -796,7 +796,7 @@ const BookingForm = () => {
 
   const fetchMasters = async () => {
     try {
-      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/masters');
+      const response = await axios.get('http://localhost:5001/api/masters');
       setMasters(response.data);
     } catch (error) {
       console.error('Error loading masters:', error);
@@ -833,7 +833,7 @@ const BookingForm = () => {
     // Get existing bookings for this master on this date
     let existingBookings = [];
     try {
-      const response = await axios.get(`https://backend-1-1kq5.onrender.com/api/bookings`);
+      const response = await axios.get(`http://localhost:5001/api/bookings`);
       existingBookings = response.data.filter(booking => 
         booking.masterId && booking.masterId._id === masterId && 
         new Date(booking.appointmentDate).toDateString() === new Date(date).toDateString()
@@ -1068,7 +1068,7 @@ const BookingForm = () => {
         totalPrice
       };
       
-      await axios.post('https://backend-1-1kq5.onrender.com/api/bookings', bookingData);
+      await axios.post('http://localhost:5001/api/bookings', bookingData);
       
       setAlert({ type: 'success', message: 'Buyurtma muvaffaqiyatli yaratildi!' });
       

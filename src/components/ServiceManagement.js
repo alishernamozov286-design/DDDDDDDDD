@@ -352,7 +352,7 @@ const ServiceManagement = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get('https://backend-1-1kq5.onrender.com/api/services');
+      const response = await axios.get('http://localhost:5001/api/services');
       setServices(response.data);
     } catch (error) {
       console.error('Error loading services:', error);
@@ -376,10 +376,10 @@ const ServiceManagement = () => {
     }
     try {
       if (isEditing) {
-        await axios.put(`https://backend-1-1kq5.onrender.com/api/services/${editingId}`, formData);
+        await axios.put(`http://localhost:5001/api/services/${editingId}`, formData);
         setSuccess('Xizmat muvaffaqiyatli yangilandi');
       } else {
-        await axios.post('https://backend-1-1kq5.onrender.com/api/services', formData);
+        await axios.post('http://localhost:5001/api/services', formData);
         setSuccess("Xizmat muvaffaqiyatli qo'shildi");
       }
       setFormData({ name: '', description: '', price: '', duration: '', image: '' });
@@ -408,7 +408,7 @@ const ServiceManagement = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Haqiqatan ham bu xizmatni o'chirmoqchimisiz?")) {
       try {
-        await axios.delete(`https://backend-1-1kq5.onrender.com/api/services/${id}`);
+        await axios.delete(`http://localhost:5001/api/services/${id}`);
         setSuccess("Xizmat muvaffaqiyatli o'chirildi");
         fetchServices();
         setTimeout(() => setSuccess(''), 3000);
