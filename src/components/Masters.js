@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { FaUser, FaPhone, FaClock, FaStar, FaMedal, FaUserTie } from 'react-icons/fa';
-const BASE_URL = 'https://backend-2-fkeh.onrender.com';
+const BASE_URL ='https://backend-2-fkeh.onrender.com';
 
 const MastersSection = styled.section`
   padding: 120px 20px;
