@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
-const BASE_URL = 'https://backend-2-fkeh.onrender.com';
+const BASE_URL ='https://backend-3-gtdh.onrender.com';
 
 // Add shimmer animation for enhanced visual appeal
 const shimmer = keyframes`

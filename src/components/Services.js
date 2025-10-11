@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { FaCut, FaSoap, FaMagic } from 'react-icons/fa';
 import { GiBeard, GiFaceToFace } from 'react-icons/gi';
-const BASE_URL ='https://backend-3-gtdh.onrender.com';
+const BASE_URL = 'https://backend-3-gtdh.onrender.com';
 
 // We'll use a different icon for beard and face since some icons don't exist in react-icons/fa
 
