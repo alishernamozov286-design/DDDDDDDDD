@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 const BASE_URL = 'https://backend-2-1-o1wi.onrender.com';
@@ -50,72 +50,20 @@ const SectionTitle = styled.h2`
   }
 `;
 
-const Button = styled.button`
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  margin-right: 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(37, 117, 252, 0.6);
-  position: relative;
-  overflow: hidden;
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(37, 117, 252, 0.8);
-    background: linear-gradient(45deg, #2575fc, #6a11cb);
-  }
-  
-  &:disabled {
-    background: rgba(255, 255, 255, 0.2);
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-  
-  &:active {
-    transform: translateY(0);
-  }
-  
-  &::after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 20px;
-    height: 200%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: rotate(30deg);
-    transition: all 0.6s;
-  }
-  
-  &:hover::after {
-    left: 120%;
-  }
-  
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.5), 0 6px 25px rgba(37, 117, 252, 0.8);
-  }
-`;
+
 
 const Alert = styled.div`
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
-  background: ${props => props.type === 'error' 
-    ? 'linear-gradient(45deg, rgba(244, 67, 54, 0.4), rgba(233, 30, 99, 0.4))' 
+  background: ${props => props.type === 'error'
+    ? 'linear-gradient(45deg, rgba(244, 67, 54, 0.4), rgba(233, 30, 99, 0.4))'
     : 'linear-gradient(45deg, rgba(76, 175, 80, 0.4), rgba(139, 195, 74, 0.4))'};
   color: white;
   border: 1px solid ${props => props.type === 'error' ? 'rgba(244, 67, 54, 0.7)' : 'rgba(76, 175, 80, 0.7)'};
   backdrop-filter: blur(5px);
-  box-shadow: 0 4px 15px ${props => props.type === 'error' 
-    ? 'rgba(244, 67, 54, 0.3)' 
+  box-shadow: 0 4px 15px ${props => props.type === 'error'
+    ? 'rgba(244, 67, 54, 0.3)'
     : 'rgba(76, 175, 80, 0.3)'};
   animation: ${props => props.type === 'error' ? 'shake 0.5s' : 'fadeIn 0.5s'};
   
@@ -197,7 +145,7 @@ const BookingItem = styled.div`
   }
   
   background: ${props => {
-    switch(props.status) {
+    switch (props.status) {
       case 'kutilmoqda': return 'rgba(255, 152, 0, 0.2)';
       case 'tasdiqlangan': return 'rgba(76, 175, 80, 0.2)';
       case 'bekor_qilingan': return 'rgba(244, 67, 54, 0.2)';
@@ -206,7 +154,7 @@ const BookingItem = styled.div`
   }};
   
   border-left: 5px solid ${props => {
-    switch(props.status) {
+    switch (props.status) {
       case 'kutilmoqda': return '#ff9800';
       case 'tasdiqlangan': return '#4caf50';
       case 'bekor_qilingan': return '#f44336';
@@ -241,7 +189,7 @@ const StatusBadge = styled.span`
   font-size: 14px;
   font-weight: 600;
   background: ${props => {
-    switch(props.status) {
+    switch (props.status) {
       case 'kutilmoqda': return 'linear-gradient(45deg, #ff9800, #ff5722)';
       case 'tasdiqlangan': return 'linear-gradient(45deg, #4caf50, #8bc34a)';
       case 'bekor_qilingan': return 'linear-gradient(45deg, #f44336, #e91e63)';
@@ -271,10 +219,10 @@ const StatusBadge = styled.span`
 `;
 
 const ActionButton = styled.button`
-  background: ${props => props.danger 
-    ? 'linear-gradient(45deg, #ff416c, #ff4b2b)' 
-    : props.success 
-      ? 'linear-gradient(45deg, #00c853, #64dd17)' 
+  background: ${props => props.danger
+    ? 'linear-gradient(45deg, #ff416c, #ff4b2b)'
+    : props.success
+      ? 'linear-gradient(45deg, #00c853, #64dd17)'
       : 'linear-gradient(45deg, #2196f3, #21cbf3)'};
   color: white;
   border: none;
@@ -284,21 +232,21 @@ const ActionButton = styled.button`
   margin-left: 10px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px ${props => props.danger 
-    ? 'rgba(255, 65, 108, 0.4)' 
-    : props.success 
-      ? 'rgba(0, 200, 83, 0.4)' 
+  box-shadow: 0 4px 15px ${props => props.danger
+    ? 'rgba(255, 65, 108, 0.4)'
+    : props.success
+      ? 'rgba(0, 200, 83, 0.4)'
       : 'rgba(33, 150, 243, 0.4)'};
   position: relative;
   overflow: hidden;
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px ${props => props.danger 
-      ? 'rgba(255, 65, 108, 0.6)' 
-      : props.success 
-        ? 'rgba(0, 200, 83, 0.6)' 
-        : 'rgba(33, 150, 243, 0.6)'};
+    box-shadow: 0 6px 20px ${props => props.danger
+    ? 'rgba(255, 65, 108, 0.6)'
+    : props.success
+      ? 'rgba(0, 200, 83, 0.6)'
+      : 'rgba(33, 150, 243, 0.6)'};
     opacity: 0.9;
   }
   
@@ -320,11 +268,11 @@ const ActionButton = styled.button`
   
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px ${props => props.danger 
-      ? 'rgba(255, 65, 108, 0.5)' 
-      : props.success 
-        ? 'rgba(0, 200, 83, 0.5)' 
-        : 'rgba(33, 150, 243, 0.5)'};
+    box-shadow: 0 0 0 3px ${props => props.danger
+    ? 'rgba(255, 65, 108, 0.5)'
+    : props.success
+      ? 'rgba(0, 200, 83, 0.5)'
+      : 'rgba(33, 150, 243, 0.5)'};
   }
 `;
 
@@ -353,18 +301,15 @@ const DetailItem = styled.div`
 
 const BookingManagement = () => {
   const [bookings, setBookings] = useState([]);
-  const [masters, setMasters] = useState([]);
-  const [services, setServices] = useState([]);
   const [alert, setAlert] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchBookings();
-    fetchMasters();
-    fetchServices();
+  const showAlert = useCallback((message, type) => {
+    setAlert({ message, type });
+    setTimeout(() => setAlert(null), 5000);
   }, []);
 
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${BASE_URL}/api/bookings`);
@@ -374,35 +319,16 @@ const BookingManagement = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [showAlert]);
 
-  const fetchMasters = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/api/masters`);
-      setMasters(response.data);
-    } catch (error) {
-      console.error('Ustalarni yuklashda xatolik:', error);
-    }
-  };
-
-  const fetchServices = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}/api/services`);
-      setServices(response.data);
-    } catch (error) {
-      console.error('Xizmatlarni yuklashda xatolik:', error);
-    }
-  };
-
-  const showAlert = (message, type) => {
-    setAlert({ message, type });
-    setTimeout(() => setAlert(null), 5000);
-  };
+  useEffect(() => {
+    fetchBookings();
+  }, [fetchBookings]);
 
   const updateBookingStatus = async (id, status) => {
     try {
 
-      
+
       setLoading(true);
       await axios.patch(`${BASE_URL}/api/bookings/` + id + '/status', { status });
       showAlert(`Bron ${status === 'tasdiqlangan' ? 'tasdiqlandi' : 'bekor qilindi'}!`, 'success');
@@ -430,7 +356,7 @@ const BookingManagement = () => {
   };
 
   const getStatusText = (status) => {
-    switch(status) {
+    switch (status) {
       case 'kutilmoqda': return 'Kutilmoqda';
       case 'tasdiqlangan': return 'Tasdiqlangan';
       case 'bekor_qilingan': return 'Bekor qilingan';
@@ -446,15 +372,15 @@ const BookingManagement = () => {
   return (
     <ManagementContainer>
       <SectionTitle>Bronlarni Boshqarish</SectionTitle>
-      
 
-      
+
+
       {alert && (
         <Alert type={alert.type}>
           {alert.message}
         </Alert>
       )}
-      
+
       <BookingList>
         <h3>Bronlar Ro'yxati</h3>
         {loading ? (
@@ -472,15 +398,15 @@ const BookingManagement = () => {
                 <div>
                   {booking.status === 'kutilmoqda' && (
                     <>
-                      <ActionButton 
-                        success 
+                      <ActionButton
+                        success
                         onClick={() => updateBookingStatus(booking._id, 'tasdiqlangan')}
                         disabled={loading}
                       >
                         Tasdiqlash
                       </ActionButton>
-                      <ActionButton 
-                        danger 
+                      <ActionButton
+                        danger
                         onClick={() => updateBookingStatus(booking._id, 'bekor_qilingan')}
                         disabled={loading}
                       >
@@ -488,8 +414,8 @@ const BookingManagement = () => {
                       </ActionButton>
                     </>
                   )}
-                  <ActionButton 
-                    danger 
+                  <ActionButton
+                    danger
                     onClick={() => deleteBooking(booking._id)}
                     disabled={loading}
                   >
@@ -497,39 +423,39 @@ const BookingManagement = () => {
                   </ActionButton>
                 </div>
               </BookingHeader>
-              
+
               <BookingDetails>
                 <DetailItem>
                   <strong>Telefon</strong>
                   <p>{booking.customerPhone}</p>
                 </DetailItem>
-                
+
                 <DetailItem>
                   <strong>Xizmat</strong>
                   <p>{booking.serviceId?.name || "Noma'lum"}</p>
                 </DetailItem>
-                
+
                 <DetailItem>
                   <strong>Usta</strong>
                   <p>{booking.masterId?.name || "Noma'lum"}</p>
                 </DetailItem>
-                
+
                 <DetailItem>
                   <strong>Sana</strong>
                   <p>{formatDate(booking.appointmentDate)}</p>
                 </DetailItem>
-                
+
                 <DetailItem>
                   <strong>Vaqt</strong>
                   <p>{booking.appointmentTime}</p>
                 </DetailItem>
-                
+
                 <DetailItem>
                   <strong>Narx</strong>
                   <p>{booking.totalPrice?.toLocaleString() || "Noma'lum"} so'm</p>
                 </DetailItem>
               </BookingDetails>
-              
+
               {booking.notes && (
                 <div style={{ marginTop: '15px' }}>
                   <strong>Izoh:</strong>

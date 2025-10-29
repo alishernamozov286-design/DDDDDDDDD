@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import React, { useState, useEffect, useCallback } from 'react';
+import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 const BASE_URL = 'https://backend-2-1-o1wi.onrender.com';
 
@@ -270,31 +270,7 @@ const TextArea = styled.textarea`
   }
 `;
 
-const Select = styled.select`
-  width: 100%;
-  padding: 18px 20px;
-  border: 2px solid rgba(106, 17, 203, 0.6);
-  border-radius: 12px;
-  font-size: 17px;
-  background: rgba(30, 20, 50, 0.8);
-  color: white;
-  backdrop-filter: blur(8px);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.4), 0 5px 15px rgba(0, 0, 0, 0.2);
-  
-  &:focus {
-    outline: none;
-    border-color: #6a11cb;
-    box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.6), 0 0 20px rgba(106, 17, 203, 0.8);
-    background: rgba(35, 25, 55, 0.9);
-  }
-  
-  &:hover {
-    border-color: #a0c4ff;
-    box-shadow: 0 0 15px rgba(160, 196, 255, 0.6), inset 0 3px 15px rgba(0, 0, 0, 0.4);
-    background: rgba(35, 25, 55, 0.85);
-  }
-`;
+
 
 const Button = styled.button`
   background: linear-gradient(45deg, #6a11cb, #2575fc);
@@ -354,14 +330,14 @@ const Alert = styled.div`
   padding: 25px;
   margin-bottom: 25px;
   border-radius: 12px;
-  background: ${props => props.type === 'error' 
-    ? 'linear-gradient(45deg, rgba(244, 67, 54, 0.5), rgba(233, 30, 99, 0.5))' 
+  background: ${props => props.type === 'error'
+    ? 'linear-gradient(45deg, rgba(244, 67, 54, 0.5), rgba(233, 30, 99, 0.5))'
     : 'linear-gradient(45deg, rgba(76, 175, 80, 0.5), rgba(139, 195, 74, 0.5))'};
   color: white;
   border: 1px solid ${props => props.type === 'error' ? 'rgba(244, 67, 54, 0.8)' : 'rgba(76, 175, 80, 0.8)'};
   backdrop-filter: blur(8px);
-  box-shadow: 0 6px 20px ${props => props.type === 'error' 
-    ? 'rgba(244, 67, 54, 0.4)' 
+  box-shadow: 0 6px 20px ${props => props.type === 'error'
+    ? 'rgba(244, 67, 54, 0.4)'
     : 'rgba(76, 175, 80, 0.4)'};
   animation: ${props => props.type === 'error' ? 'shake 0.6s' : 'fadeIn 0.6s'};
   position: relative;
@@ -526,8 +502,8 @@ const MasterName = styled.h3`
 `;
 
 const ActionButton = styled.button`
-  background: ${props => props.danger 
-    ? 'linear-gradient(45deg, #ff416c, #ff4b2b)' 
+  background: ${props => props.danger
+    ? 'linear-gradient(45deg, #ff416c, #ff4b2b)'
     : 'linear-gradient(45deg, #2196f3, #21cbf3)'};
   color: white;
   border: none;
@@ -537,8 +513,8 @@ const ActionButton = styled.button`
   margin-left: 15px;
   font-weight: 600;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 5px 18px ${props => props.danger 
-    ? 'rgba(255, 65, 108, 0.5)' 
+  box-shadow: 0 5px 18px ${props => props.danger
+    ? 'rgba(255, 65, 108, 0.5)'
     : 'rgba(33, 150, 243, 0.5)'};
   position: relative;
   overflow: hidden;
@@ -546,9 +522,9 @@ const ActionButton = styled.button`
   
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px ${props => props.danger 
-      ? 'rgba(255, 65, 108, 0.7)' 
-      : 'rgba(33, 150, 243, 0.7)'};
+    box-shadow: 0 8px 25px ${props => props.danger
+    ? 'rgba(255, 65, 108, 0.7)'
+    : 'rgba(33, 150, 243, 0.7)'};
     opacity: 0.95;
   }
   
@@ -669,7 +645,7 @@ const MasterDetail = styled.p`
 
 const daysOfWeek = [
   'Dushanba',
-  'Seshanba', 
+  'Seshanba',
   'Chorshanba',
   'Payshanba',
   'Juma',
@@ -691,11 +667,12 @@ const MasterManagement = () => {
   const [alert, setAlert] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchMasters();
+  const showAlert = useCallback((message, type) => {
+    setAlert({ message, type });
+    setTimeout(() => setAlert(null), 5000);
   }, []);
 
-  const fetchMasters = async () => {
+  const fetchMasters = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${BASE_URL}/api/masters`);
@@ -705,39 +682,38 @@ const MasterManagement = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [showAlert]);
 
-  const showAlert = (message, type) => {
-    setAlert({ message, type });
-    setTimeout(() => setAlert(null), 5000);
-  };
+  useEffect(() => {
+    fetchMasters();
+  }, [fetchMasters]);
 
   const validateForm = () => {
     if (!formData.name.trim()) {
       showAlert("Ismni kiriting", 'error');
       return false;
     }
-    
+
     if (!formData.experience || formData.experience <= 0) {
       showAlert("Tajribani kiriting (musbat son)", 'error');
       return false;
     }
-    
+
     if (!formData.phone.trim()) {
       showAlert("Telefon raqamni kiriting", 'error');
       return false;
     }
-    
+
     if (!formData.specialization.trim()) {
       showAlert("Mutaxassizlikni kiriting", 'error');
       return false;
     }
-    
+
     if (formData.workingDays.length === 0) {
       showAlert("Kamida bitta ish kunini tanlang", 'error');
       return false;
     }
-    
+
     return true;
   };
 
@@ -764,7 +740,7 @@ const MasterManagement = () => {
       const workingDays = prev.workingDays.includes(day)
         ? prev.workingDays.filter(d => d !== day)
         : [...prev.workingDays, day];
-      
+
       return {
         ...prev,
         workingDays
@@ -774,20 +750,20 @@ const MasterManagement = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     const dataToSend = {
       ...formData,
       experience: parseInt(formData.experience),
       specialization: formData.specialization.split(',').map(s => s.trim()).filter(s => s)
     };
-    
+
     try {
       setLoading(true);
-      
+
       if (editingId) {
         // Update existing master
         await axios.put(`${BASE_URL}/api/masters/` + editingId, dataToSend);
@@ -797,7 +773,7 @@ const MasterManagement = () => {
         await axios.post(`${BASE_URL}/api/masters`, dataToSend);
         showAlert("Yangi usta muvaffaqiyatli qo'shildi!", 'success');
       }
-      
+
       // Reset form
       setFormData({
         name: '',
@@ -808,7 +784,7 @@ const MasterManagement = () => {
         workingDays: []
       });
       setEditingId(null);
-      
+
       // Refresh masters list
       fetchMasters();
     } catch (error) {
@@ -835,7 +811,7 @@ const MasterManagement = () => {
     if (!window.confirm("Haqiqatan ham bu ustani o'chirmoqchimisiz?")) {
       return;
     }
-    
+
     try {
       setLoading(true);
       await axios.delete(`${BASE_URL}/api/masters/` + id);
@@ -863,13 +839,13 @@ const MasterManagement = () => {
   return (
     <ManagementContainer>
       <SectionTitle>Ustalarni Boshqarish</SectionTitle>
-      
+
       {alert && (
         <Alert type={alert.type}>
           {alert.message}
         </Alert>
       )}
-      
+
       <FormContainer>
         <h3>
           {editingId ? 'Ustani Tahrirlash' : 'Yangi Usta Qo\'shish'}
@@ -886,7 +862,7 @@ const MasterManagement = () => {
               placeholder="Masalan: Aziz Karimov"
             />
           </FormGroup>
-          
+
           <FormGroup>
             <Label htmlFor="experience">Tajriba (yil) *</Label>
             <Input
@@ -899,7 +875,7 @@ const MasterManagement = () => {
               min="0"
             />
           </FormGroup>
-          
+
           <FormGroup>
             <Label htmlFor="specialization">Mutaxassizliklar *</Label>
             <TextArea
@@ -910,7 +886,7 @@ const MasterManagement = () => {
               placeholder="Masalan: Klassik soch kesish, Soqol tarash, Styling (vergul bilan ajrating)"
             />
           </FormGroup>
-          
+
           <FormGroup>
             <Label htmlFor="phone">Telefon Raqam *</Label>
             <Input
@@ -922,7 +898,7 @@ const MasterManagement = () => {
               placeholder="Masalan: +998 90 123 45 67"
             />
           </FormGroup>
-          
+
           <FormGroup>
             <Label>Ish Vaqti *</Label>
             <WorkingHoursContainer>
@@ -946,7 +922,7 @@ const MasterManagement = () => {
               </div>
             </WorkingHoursContainer>
           </FormGroup>
-          
+
           <FormGroup>
             <Label>Ish Kunlari *</Label>
             <DayCheckboxContainer>
@@ -962,7 +938,7 @@ const MasterManagement = () => {
               ))}
             </DayCheckboxContainer>
           </FormGroup>
-          
+
           <div>
             <Button type="submit" disabled={loading}>
               {loading ? 'Saqlanmoqda...' : (editingId ? 'Yangilash' : 'Qo\'shish')}
@@ -975,7 +951,7 @@ const MasterManagement = () => {
           </div>
         </form>
       </FormContainer>
-      
+
       <MasterList>
         <h3>Mavjud Ustalar</h3>
         {loading ? (
