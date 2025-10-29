@@ -19,14 +19,14 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "set CI=false && react-scripts build",
+    "build": "node scripts/build.js",
+    "build:render": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "npm run build && npx serve -s build",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write src/**/*.js",
-    "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "postbuild": "copy _redirects build\\"
+    "test:coverage": "react-scripts test --coverage --watchAll=false"
   },
   "keywords": [
     "barbershop",
@@ -39,7 +39,7 @@
   ],
   "author": "Alisher Namozov",
   "license": "MIT",
-  "homepage": "https://alishernamozov286-design.github.io/frontend",
+  "homepage": ".",
   "repository": {
     "type": "git",
     "url": "https://github.com/alishernamozov286-design/frontend.git"
