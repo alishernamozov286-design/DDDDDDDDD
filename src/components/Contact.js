@@ -4,7 +4,7 @@ import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaCar, FaParking, FaSchoo
 
 const ContactSection = styled.section`
   padding: 120px 20px;
-  background: linear-gradient(135deg, #0d0f3d 0%, #2c1a4d 50%, #5a2d82 100%);
+  background: linear-gradient(135deg, #0c1a33 0%, #1a2a4a 50%, #2c3e6b 100%);
   position: relative;
   overflow: hidden;
   
@@ -56,7 +56,7 @@ const SectionTitle = styled.h2`
     transform: translateX(-50%);
     width: 120px;
     height: 5px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #2c3e6b, #34495e);
     border-radius: 3px;
     animation: expandLine 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
   }
@@ -101,12 +101,12 @@ const ContactContainer = styled.div`
 `;
 
 const ContactInfo = styled.div`
-  background: rgba(43, 30, 77, 0.85);
+  background: rgba(12, 26, 51, 0.85);
   border-radius: 25px;
   padding: 45px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(44, 62, 80, 0.4);
   position: relative;
   z-index: 1;
   animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1);
@@ -120,7 +120,7 @@ const ContactInfo = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.2), rgba(52, 73, 94, 0.2));
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: -1;
@@ -128,20 +128,45 @@ const ContactInfo = styled.div`
     border-radius: 25px;
   }
   
+  /* Add immersive effect */
+  &::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 35px;
+    background: radial-gradient(circle, rgba(44, 62, 80, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: -2;
+    animation: immersiveWave 6s linear infinite;
+  }
+  
   &:hover {
     transform: translateZ(0) translateY(-15px) rotateX(5deg);
-    box-shadow: 0 30px 80px rgba(37, 117, 252, 0.6);
-    background: rgba(43, 30, 77, 0.95);
-    border: 1px solid rgba(106, 17, 203, 0.6);
+    box-shadow: 0 30px 80px rgba(44, 62, 80, 0.6);
+    background: rgba(12, 26, 51, 0.95);
+    border: 1px solid rgba(44, 62, 80, 0.6);
     
     &::before {
       opacity: 1;
+    }
+    
+    &::after {
+      opacity: 0.4;
     }
   }
   
   @keyframes fadeIn {
     from { opacity: 0; transform: translateZ(0) translateY(30px); }
     to { opacity: 1; transform: translateZ(0) translateY(0); }
+  }
+  
+  @keyframes immersiveWave {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
   
   @media (max-width: 768px) {
@@ -171,7 +196,7 @@ const InfoTitle = styled.h3`
     left: 0;
     width: 65px;
     height: 4px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #2c3e6b, #34495e);
     border-radius: 2px;
     animation: expandLine 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
   }
@@ -202,7 +227,7 @@ const InfoItem = styled.div`
 `;
 
 const InfoIcon = styled.div`
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  background: linear-gradient(45deg, #2c3e6b, #34495e);
   width: 55px;
   height: 55px;
   border-radius: 50%;
@@ -213,7 +238,7 @@ const InfoIcon = styled.div`
   font-size: 1.4rem;
   margin-right: 20px;
   flex-shrink: 0;
-  box-shadow: 0 6px 20px rgba(37, 117, 252, 0.4);
+  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -222,7 +247,7 @@ const InfoIcon = styled.div`
   
   &:hover {
     transform: translateZ(0) translateY(-8px) scale(1.1);
-    box-shadow: 0 10px 30px rgba(37, 117, 252, 0.7);
+    box-shadow: 0 10px 30px rgba(44, 62, 80, 0.7);
   }
   
   &:active {
@@ -272,7 +297,7 @@ const InfoLabel = styled.div`
 `;
 
 const InfoValue = styled.div`
-  color: #d4c4fb;
+  color: #87ceeb;
   line-height: 1.7;
   font-size: 1.05rem;
   
@@ -281,53 +306,7 @@ const InfoValue = styled.div`
   }
 `;
 
-const MapContainer = styled.div`
-  background: rgba(30, 20, 50, 0.7);
-  border-radius: 20px;
-  height: 350px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #d4c4fb;
-  font-weight: 500;
-  border: 1px solid rgba(106, 17, 203, 0.5);
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: -1;
-    pointer-events: none;
-    border-radius: 20px;
-  }
-  
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(37, 117, 252, 0.4);
-    
-    &::before {
-      opacity: 1;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    height: 300px;
-  }
-  
-  @media (max-width: 480px) {
-    height: 250px;
-  }
-`;
+
 
 const MapIframe = styled.iframe`
   width: 100%;
@@ -337,11 +316,11 @@ const MapIframe = styled.iframe`
 `;
 
 const LocationInfo = styled.div`
-  background: rgba(43, 30, 77, 0.7);
+  background: rgba(12, 26, 51, 0.7);
   border-radius: 20px;
   padding: 25px;
   margin-top: 25px;
-  border: 1px solid rgba(106, 17, 203, 0.5);
+  border: 1px solid rgba(44, 62, 80, 0.5);
   position: relative;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   
@@ -352,7 +331,7 @@ const LocationInfo = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.2), rgba(52, 73, 94, 0.2));
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: -1;
@@ -386,7 +365,7 @@ const LocationTitle = styled.h4`
     left: 0;
     width: 40px;
     height: 3px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #2c3e6b, #34495e);
     border-radius: 1.5px;
     animation: expandLine 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
   }
@@ -402,7 +381,7 @@ const LocationTitle = styled.h4`
 `;
 
 const LocationDetail = styled.p`
-  color: #d4c4fb;
+  color: #87ceeb;
   margin: 15px 0;
   line-height: 1.7;
   display: flex;
@@ -417,7 +396,7 @@ const LocationDetail = styled.p`
 const LocationIcon = styled.span`
   margin-right: 12px;
   font-size: 1.3rem;
-  color: #a0c4ff;
+  color: #87ceeb;
   min-width: 24px;
 `;
 
@@ -439,19 +418,59 @@ const SocialLink = styled.a`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  background: linear-gradient(45deg, #2c3e6b, #34495e);
   color: white;
   text-decoration: none;
   font-size: 1.4rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 6px 20px rgba(37, 117, 252, 0.4);
+  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
   
-  &:hover {
-    transform: translateY(-5px) rotate(10deg);
-    box-shadow: 0 8px 25px rgba(37, 117, 252, 0.6);
-    background: linear-gradient(45deg, #2575fc, #6a11cb);
+  /* Har bir ijtimoiy tarmoq uchun alohida ranglar */
+  &[aria-label="Telegram"] {
+    &:hover {
+      background: linear-gradient(45deg, #0088cc, #229ED9);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 12px 30px rgba(0, 136, 204, 0.5);
+    }
+  }
+  
+  &[aria-label="Instagram"] {
+    &:hover {
+      background: linear-gradient(45deg, #E4405F, #F77737, #FCAF45);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 12px 30px rgba(228, 64, 95, 0.5);
+    }
+  }
+  
+  &[aria-label="Facebook"] {
+    &:hover {
+      background: linear-gradient(45deg, #1877F2, #42A5F5);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 12px 30px rgba(24, 119, 242, 0.5);
+    }
+  }
+  
+  &[aria-label="Twitter"] {
+    &:hover {
+      background: linear-gradient(45deg, #1DA1F2, #0D8BD9);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 12px 30px rgba(29, 161, 242, 0.5);
+    }
+  }
+  
+  &[aria-label="WhatsApp"] {
+    &:hover {
+      background: linear-gradient(45deg, #25D366, #128C7E);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
+    }
+  }
+  
+  &:active {
+    transform: translateY(-4px) scale(1.05);
   }
   
   &::after {
@@ -470,6 +489,36 @@ const SocialLink = styled.a`
     left: 120%;
   }
   
+  /* Pulse animatsiyasi */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0;
+    transform: scale(1);
+    animation: socialPulse 2s infinite;
+  }
+  
+  @keyframes socialPulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(1.4);
+      opacity: 0;
+    }
+  }
+  
   @media (max-width: 480px) {
     width: 45px;
     height: 45px;
@@ -477,10 +526,108 @@ const SocialLink = styled.a`
   }
 `;
 
+const ImmersiveMap = styled.div`
+  position: relative;
+  width: 100%;
+  height: 350px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  background: rgba(12, 26, 51, 0.7);
+  border: 1px solid rgba(44, 62, 80, 0.5);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.2), rgba(52, 73, 94, 0.2));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+    border-radius: 20px;
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
+  
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 250px;
+  }
+`;
+
+const MapOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(44, 62, 80, 0.1), rgba(52, 73, 94, 0.1));
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 20px;
+`;
+
+const LocationMarker = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, #2c3e6b, #34495e);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  box-shadow: 0 0 20px rgba(44, 62, 80, 0.8);
+  animation: pulse 2s infinite;
+  z-index: 3;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid white;
+    animation: ripple 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+  
+  @keyframes ripple {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+  
+  @media (max-width: 480px) {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+`;
+
 const Contact = () => {
   return (
     <ContactSection id="contact">
-      <SectionTitle><FaMapMarkerAlt /> Biz bilan bog'lanish</SectionTitle>
+      <SectionTitle><FaMapMarkerAlt />  Biz bilan bog'lanish</SectionTitle>
       <ContactContainer>
         <ContactInfo>
           <InfoTitle><FaPhone /> Aloqa ma'lumotlari</InfoTitle>
@@ -538,19 +685,44 @@ const Contact = () => {
           </InfoValue>
           
           <SocialLinks>
-            <SocialLink href="#" aria-label="Telegram">
+            <SocialLink 
+              href="https://t.me/barbershop_buxara" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Telegram"
+            >
               <FaTelegram />
             </SocialLink>
-            <SocialLink href="#" aria-label="Instagram">
+            <SocialLink 
+              href="https://instagram.com/barbershop_buxara" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
               <FaInstagram />
             </SocialLink>
-            <SocialLink href="#" aria-label="Facebook">
+            <SocialLink 
+              href="https://facebook.com/barbershop.buxara" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
               <FaFacebook />
             </SocialLink>
-            <SocialLink href="#" aria-label="Twitter">
+            <SocialLink 
+              href="https://twitter.com/barbershop_bux" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
               <FaTwitter />
             </SocialLink>
-            <SocialLink href="#" aria-label="WhatsApp">
+            <SocialLink 
+              href="https://wa.me/998771435351" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+            >
               <FaWhatsapp />
             </SocialLink>
           </SocialLinks>
@@ -558,7 +730,11 @@ const Contact = () => {
         
         <ContactInfo>
           <InfoTitle><FaMapMarkerAlt /> Bizning manzilimiz</InfoTitle>
-          <MapContainer>
+          <ImmersiveMap>
+            <MapOverlay />
+            <LocationMarker>
+              <FaMapMarkerAlt />
+            </LocationMarker>
             <MapIframe 
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100000!2d64.5000!3d40.0000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38b4c2d4a4d4a4d5%3A0x4d5a4d5a4d5a4d5a!2sGijduvon%20District%2C%20Bukhara%20Region%2C%20Uzbekistan!5e0!3m2!1sen!2s!4v1650000000000!5m2!1sen!2s" 
               allowFullScreen="" 
@@ -566,7 +742,7 @@ const Contact = () => {
               referrerPolicy="no-referrer-when-downgrade"
               title="Barbershop Location"
             />
-          </MapContainer>
+          </ImmersiveMap>
           
           <LocationInfo>
             <LocationTitle><FaMapMarkerAlt /> Joylashuv tafsilotlari</LocationTitle>

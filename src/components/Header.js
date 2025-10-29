@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fa';
 
 const HeaderContainer = styled.header`
-  background: linear-gradient(135deg, #0d0f3d 0%, #2c1a4d 50%, #5a2d82 100%);
+  background: linear-gradient(135deg, #0c1a33 0%, #1a2a4a 50%, #2c3e6b 100%);
   backdrop-filter: blur(10px);
   position: fixed;
   top: 0;
@@ -23,7 +23,7 @@ const HeaderContainer = styled.header`
   z-index: 1000;
   padding: 1rem 2.5rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(106, 17, 203, 0.6);
+  border-bottom: 1px solid rgba(44, 62, 80, 0.6);
   transition: all 0.3s ease;
 
   &::before {
@@ -41,9 +41,15 @@ const HeaderContainer = styled.header`
       radial-gradient(1px 1px at 160px 30px, rgba(255, 255, 255, 0.4), transparent);
     background-repeat: repeat;
     background-size: 300px 150px;
-    opacity: 0.2;
+    opacity: 0.25;
     pointer-events: none;
     z-index: -1;
+    animation: twinkle 3s infinite alternate;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.15; }
+    100% { opacity: 0.35; }
   }
 
   @media (max-width: 992px) {
@@ -75,9 +81,9 @@ const HeaderContent = styled.div`
 const Logo = styled.div`
   font-size: 2rem;
   font-weight: 800;
-  color: #a0c4ff;
+  color: white;
   cursor: pointer;
-  background: linear-gradient(90deg, #fff, #a0c4ff, #d4c4fb);
+  background: linear-gradient(90deg, #fff, #fff, #fff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -86,9 +92,15 @@ const Logo = styled.div`
   align-items: center;
   gap: 10px;
   white-space: nowrap;
+  animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
   }
 
   @media (max-width: 992px) {
@@ -126,6 +138,14 @@ const Logo = styled.div`
     vertical-align: middle;
     position: relative;
     top: -1px;
+    color: white;
+    animation: pulse 2s infinite;
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
     
     @media (max-width: 768px) {
       font-size: 1.4rem;
@@ -152,7 +172,13 @@ const Nav = styled.nav`
     left: 0;
     right: 0;
     height: 2px;
-    background: rgba(106, 17, 203, 0.6);
+    background: linear-gradient(90deg, transparent, rgba(44, 62, 80, 0.8), transparent);
+    animation: expandLine 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+  }
+  
+  @keyframes expandLine {
+    from { width: 0; opacity: 0; }
+    to { width: 100%; opacity: 1; }
   }
 
   @media (max-width: 1200px) {
@@ -169,7 +195,7 @@ const Nav = styled.nav`
 `;
 
 const NavItem = styled(Link)`
-  color: #d4c4fb;
+  color: #e0e0ff;
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;
@@ -186,6 +212,22 @@ const NavItem = styled(Link)`
   line-height: 1;
   white-space: nowrap;
   flex-shrink: 0;
+  animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.2), rgba(52, 73, 94, 0.2));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 30px;
+  }
 
   svg {
     font-size: 1.1rem;
@@ -193,34 +235,47 @@ const NavItem = styled(Link)`
     position: relative;
     top: -1px;
     transition: transform 0.3s ease;
+    color: #e0e0ff;
   }
 
   &:hover {
-    color: #a0c4ff;
-    background: rgba(106, 17, 203, 0.4);
+    color: white;
+    background: rgba(44, 62, 80, 0.4);
     transform: translateY(-2px);
+    
+    &::before {
+      opacity: 1;
+    }
   }
 
   &:hover svg {
     transform: scale(1.2);
+    color: white;
   }
 
   &.active {
-    color: #a0c4ff;
-    background: rgba(106, 17, 203, 0.4);
+    color: white;
+    background: rgba(44, 62, 80, 0.4);
   }
 
-  /* Even thicker white underline indicator for active section */
-  &.active::after {
+  /* White underline indicator for active and hover states */
+  &.active::after,
+  &:hover::after {
     content: '';
     position: absolute;
-    bottom: -2px; /* Align with navbar bottom border */
+    bottom: -2px;
     left: 50%;
     transform: translateX(-50%);
     width: 60%;
-    height: 8px; /* Increased thickness from 5px to 8px */
-    background: #ffffff; /* White color */
-    border-radius: 4px; /* Increased border radius to match */
+    height: 5px;
+    background: #ffffff;
+    border-radius: 4px;
+    animation: expandLine 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  
+  @keyframes expandLine {
+    from { width: 0; opacity: 0; }
+    to { width: 60%; opacity: 1; }
   }
 
   @media (max-width: 1200px) {
@@ -246,6 +301,7 @@ const NavItem = styled(Link)`
   }
 `;
 
+// Yangi qizil rangli chiqish tugmasi
 const LogoutButton = styled.button`
   background: linear-gradient(45deg, #ff416c, #ff4b2b);
   color: white;
@@ -263,6 +319,25 @@ const LogoutButton = styled.button`
   font-size: 1rem;
   white-space: nowrap;
   flex-shrink: 0;
+  animation: fadeIn 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20px;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(30deg);
+    transition: all 0.6s;
+  }
+  
+  &:hover::after {
+    left: 120%;
+  }
 
   svg {
     vertical-align: middle;
@@ -306,11 +381,12 @@ const MobileMenuButton = styled.button`
   display: none;
   background: none;
   border: none;
-  color: #d4c4fb;
+  color: #87ceeb;
   font-size: 1.8rem;
   cursor: pointer;
   z-index: 1001;
   padding: 0.5rem;
+  animation: fadeIn 1.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   @media (max-width: 768px) {
     display: block;
@@ -333,7 +409,7 @@ const MobileMenu = styled.div`
     width: 80%;
     max-width: 300px;
     height: 100vh;
-    background: linear-gradient(135deg, #0d0f3d 0%, #2c1a4d 100%);
+    background: linear-gradient(135deg, #0c1a33 0%, #1a2a4a 100%);
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
     z-index: 1000;
     padding: 6rem 1.5rem 2rem;
@@ -355,7 +431,7 @@ const MobileNav = styled.nav`
 `;
 
 const MobileNavItem = styled(Link)`
-  color: #d4c4fb;
+  color: #e0e0ff;
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;
@@ -368,27 +444,53 @@ const MobileNavItem = styled(Link)`
   font-size: 1.2rem;
   line-height: 1;
   position: relative;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.2), rgba(52, 73, 94, 0.2));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 30px;
+  }
 
   svg {
     font-size: 1.3rem;
     vertical-align: middle;
     position: relative;
     top: -1px;
+    color: #e0e0ff;
   }
 
   &:hover {
-    color: #a0c4ff;
-    background: rgba(106, 17, 203, 0.4);
+    color: white;
+    background: rgba(44, 62, 80, 0.4);
     transform: translateX(5px);
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &:hover svg {
+    color: white;
   }
 
   &.active {
-    color: #a0c4ff;
-    background: rgba(106, 17, 203, 0.4);
+    color: white;
+    background: rgba(44, 62, 80, 0.4);
   }
 
-  /* Underline indicator for active section in mobile menu */
-  &.active::after {
+  /* White underline indicator for active and hover states */
+  &.active::after,
+  &:hover::after {
     content: '';
     position: absolute;
     bottom: 10px;
@@ -396,8 +498,14 @@ const MobileNavItem = styled(Link)`
     transform: translateX(-50%);
     width: 60%;
     height: 3px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: #ffffff;
     border-radius: 2px;
+    animation: expandLine 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  
+  @keyframes expandLine {
+    from { width: 0; opacity: 0; }
+    to { width: 60%; opacity: 1; }
   }
   
   @media (max-width: 576px) {
@@ -410,6 +518,7 @@ const MobileNavItem = styled(Link)`
   }
 `;
 
+// Yangi qizil rangli mobil chiqish tugmasi
 const MobileLogoutButton = styled.button`
   background: linear-gradient(45deg, #ff416c, #ff4b2b);
   color: white;
@@ -426,6 +535,24 @@ const MobileLogoutButton = styled.button`
   font-size: 1.2rem;
   margin-top: 1rem;
   width: calc(100% - 3rem);
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20px;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(30deg);
+    transition: all 0.6s;
+  }
+  
+  &:hover::after {
+    left: 120%;
+  }
 
   svg {
     position: relative;
@@ -464,6 +591,43 @@ const Overlay = styled.div`
   }
 `;
 
+// Neon effect container
+const NeonEffect = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: 10px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent,
+      rgba(44, 62, 80, 0.3),
+      transparent,
+      rgba(52, 73, 94, 0.3),
+      transparent
+    );
+    animation: neonRotate 4s linear infinite;
+    opacity: 0.5;
+  }
+  
+  @keyframes neonRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
 const Header = ({ onLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -494,6 +658,7 @@ const Header = ({ onLogout }) => {
 
   return (
     <HeaderContainer>
+      <NeonEffect />
       <HeaderContent>
         <Logo onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <FaCut />

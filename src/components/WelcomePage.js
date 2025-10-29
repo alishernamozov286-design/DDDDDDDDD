@@ -7,7 +7,7 @@ const WelcomeContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  background: linear-gradient(135deg, #0d0f3d 0%, #2c1a4d 50%, #5a2d82 100%);
   padding: 20px;
   text-align: center;
   position: relative;
@@ -40,7 +40,7 @@ const WelcomeContainer = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.1), rgba(37, 117, 252, 0.1));
+    background: linear-gradient(45deg, rgba(90, 45, 130, 0.1), rgba(63, 81, 181, 0.1));
     opacity: 0.3;
     pointer-events: none;
     z-index: 0;
@@ -57,12 +57,13 @@ const WelcomeTitle = styled.h1`
   font-size: 3rem;
   margin-bottom: 1rem;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(90deg, #fff, #a0c4ff, #d4c4fb);
+  background: linear-gradient(90deg, #fff, #ad9bd2, #d4c4fb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: 1px;
   position: relative;
+  animation: fadeInDown 1s cubic-bezier(0.4, 0, 0.2, 1);
   
   &::after {
     content: '';
@@ -72,9 +73,14 @@ const WelcomeTitle = styled.h1`
     transform: translateX(-50%);
     width: 100px;
     height: 4px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #5a2d82, #3f51b5);
     border-radius: 2px;
     animation: expandLine 1s ease 0.5s both;
+  }
+  
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-40px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   
   @keyframes expandLine {
@@ -94,6 +100,7 @@ const WelcomeSubtitle = styled.p`
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   position: relative;
   padding: 0 20px;
+  animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   
   &::before {
     content: '';
@@ -103,7 +110,7 @@ const WelcomeSubtitle = styled.p`
     transform: translateX(-50%);
     width: 50px;
     height: 2px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #5a2d82, #3f51b5);
     animation: expandLine 1s ease 0.7s both;
   }
   
@@ -115,8 +122,13 @@ const WelcomeSubtitle = styled.p`
     transform: translateX(-50%);
     width: 50px;
     height: 2px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #5a2d82, #3f51b5);
     animation: expandLine 1s ease 0.7s both;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
   
   @keyframes expandLine {
@@ -133,7 +145,7 @@ const UserTypeContainer = styled.div`
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
-  animation: fadeIn 0.5s ease;
+  animation: fadeIn 1.4s cubic-bezier(0.4, 0, 0.2, 1);
   
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -147,18 +159,19 @@ const UserTypeContainer = styled.div`
 `;
 
 const UserTypeButton = styled.button`
-  background: rgba(43, 30, 77, 0.7);
-  border: 2px solid rgba(106, 17, 203, 0.3);
-  color: #d4c4fb;
+  background: rgba(44, 26, 77, 0.7);
+  border: 2px solid rgba(90, 45, 130, 0.3);
+  color: #ad9bd2;
   padding: 1.5rem 2rem;
   border-radius: 15px;
   font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(37, 117, 252, 0.3);
+  box-shadow: 0 8px 32px rgba(90, 45, 130, 0.3);
   position: relative;
   overflow: hidden;
+  animation: float 3s ease-in-out infinite alternate;
   
   &::before {
     content: '';
@@ -167,17 +180,17 @@ const UserTypeButton = styled.button`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+    background: linear-gradient(45deg, rgba(90, 45, 130, 0.2), rgba(63, 81, 181, 0.2));
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: -1;
   }
   
   &:hover {
-    background: rgba(43, 30, 77, 0.9);
+    background: rgba(44, 26, 77, 0.9);
     transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(37, 117, 252, 0.5);
-    border-color: rgba(106, 17, 203, 0.5);
+    box-shadow: 0 12px 40px rgba(90, 45, 130, 0.5);
+    border-color: rgba(90, 45, 130, 0.5);
     color: #a0c4ff;
     
     &::before {
@@ -201,6 +214,11 @@ const UserTypeButton = styled.button`
     left: 120%;
   }
   
+  @keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+  }
+  
   @media (max-width: 768px) {
     padding: 1rem;
     font-size: 1rem;
@@ -221,6 +239,7 @@ const AdminLoginButton = styled.button`
   box-shadow: 0 4px 15px rgba(37, 117, 252, 0.2);
   position: relative;
   overflow: hidden;
+  animation: fadeIn 1.6s cubic-bezier(0.4, 0, 0.2, 1);
   
   &:hover {
     background: rgba(43, 30, 77, 0.7);
@@ -296,6 +315,7 @@ const FormTitle = styled.h2`
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
+  animation: fadeIn 0.3s ease;
   
   &::after {
     content: '';
@@ -310,6 +330,11 @@ const FormTitle = styled.h2`
     animation: expandLine 0.5s ease 0.3s both;
   }
   
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
   @keyframes expandLine {
     from { width: 0; opacity: 0; }
     to { width: 50px; opacity: 1; }
@@ -319,6 +344,7 @@ const FormTitle = styled.h2`
 const FormGroup = styled.div`
   margin-bottom: 1.5rem;
   position: relative;
+  animation: fadeIn 0.4s ease;
   
   &::after {
     content: '';
@@ -334,6 +360,11 @@ const FormGroup = styled.div`
   &:hover::after {
     width: 100%;
   }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 `;
 
 const Label = styled.label`
@@ -343,6 +374,7 @@ const Label = styled.label`
   text-align: left;
   font-weight: 500;
   position: relative;
+  animation: fadeIn 0.5s ease;
   
   &::after {
     content: '';
@@ -358,6 +390,11 @@ const Label = styled.label`
   &:hover::after {
     width: 30px;
   }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 `;
 
 const Input = styled.input`
@@ -371,6 +408,7 @@ const Input = styled.input`
   backdrop-filter: blur(5px);
   transition: all 0.3s ease;
   position: relative;
+  animation: fadeIn 0.6s ease;
   
   &:focus {
     outline: none;
@@ -381,6 +419,11 @@ const Input = styled.input`
   
   &::placeholder {
     color: rgba(212, 196, 251, 0.7);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 `;
 
@@ -398,6 +441,7 @@ const SubmitButton = styled.button`
   box-shadow: 0 4px 20px rgba(37, 117, 252, 0.4);
   position: relative;
   overflow: hidden;
+  animation: fadeIn 0.7s ease;
   
   &:hover {
     transform: translateY(-3px);
@@ -423,6 +467,11 @@ const SubmitButton = styled.button`
   
   &:hover::after {
     left: 120%;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 `;
 

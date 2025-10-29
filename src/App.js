@@ -15,9 +15,36 @@ import AdminDashboard from './components/AdminDashboard';
 
 const AppContainer = styled.div`
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, #0d0f3d 0%, #2c1a4d 50%, #5a2d82 100%);
   color: #333;
   transition: background-color 0.3s ease, color 0.3s ease;
+  
+  /* Simplified star-like dots */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+      radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.6), transparent),
+      radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.9), transparent),
+      radial-gradient(2px 2px at 130px 80px, rgba(255, 255, 255, 0.7), transparent),
+      radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.8), transparent),
+      radial-gradient(1px 1px at 70px 120px, rgba(255, 255, 255, 1), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    opacity: 0.25;
+    pointer-events: none;
+    animation: twinkle 3s infinite alternate;
+  }
+  
+  @keyframes twinkle {
+    0% { opacity: 0.15; }
+    100% { opacity: 0.35; }
+  }
   
   @media (max-width: 768px) {
     min-height: 95vh;
@@ -30,6 +57,16 @@ const AppContainer = styled.div`
 
 const SectionWrapper = styled.div`
   min-height: 100vh;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
   
   @media (max-width: 768px) {
     min-height: 90vh;

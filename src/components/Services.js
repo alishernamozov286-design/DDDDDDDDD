@@ -3,13 +3,12 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { FaCut, FaSoap, FaMagic } from 'react-icons/fa';
 import { GiBeard, GiFaceToFace } from 'react-icons/gi';
-const BASE_URL = 'https://backend-3-gtdh.onrender.com';
 
-// We'll use a different icon for beard and face since some icons don't exist in react-icons/fa
+const BASE_URL = 'https://backend-2-1-o1wi.onrender.com';
 
 const ServicesSection = styled.section`
   padding: 120px 20px;
-  background: linear-gradient(135deg, #0d0f3d 0%, #2c1a4d 50%, #5a2d82 100%);
+  background: linear-gradient(135deg, #0c1a33 0%, #1a2a4a 50%, #2c3e6b 100%);
   position: relative;
   overflow: hidden;
   
@@ -33,6 +32,7 @@ const ServicesSection = styled.section`
     animation: twinkle 4s infinite alternate;
   }
   
+  /* Enhanced floating particles */
   &::after {
     content: '';
     position: absolute;
@@ -40,8 +40,12 @@ const ServicesSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.15), rgba(37, 117, 252, 0.15));
-    opacity: 0.4;
+    background-image: 
+      radial-gradient(circle at 15% 25%, rgba(135, 206, 235, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 85% 75%, rgba(135, 206, 235, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 45% 15%, rgba(135, 206, 235, 0.12) 0%, transparent 50%),
+      radial-gradient(circle at 75% 45%, rgba(135, 206, 235, 0.09) 0%, transparent 50%);
+    animation: serviceParticles 12s ease-in-out infinite;
     pointer-events: none;
     z-index: 0;
   }
@@ -49,6 +53,25 @@ const ServicesSection = styled.section`
   @keyframes twinkle {
     0% { opacity: 0.15; }
     100% { opacity: 0.35; }
+  }
+  
+  @keyframes serviceParticles {
+    0%, 100% { 
+      transform: translateY(0px) rotate(0deg); 
+      opacity: 0.6;
+    }
+    25% { 
+      transform: translateY(-15px) rotate(90deg); 
+      opacity: 0.8;
+    }
+    50% { 
+      transform: translateY(-5px) rotate(180deg); 
+      opacity: 0.4;
+    }
+    75% { 
+      transform: translateY(-20px) rotate(270deg); 
+      opacity: 0.7;
+    }
   }
   
   @media (max-width: 1200px) {
@@ -70,25 +93,66 @@ const ServicesSection = styled.section`
 
 const SectionTitle = styled.h2`
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   color: white;
-  font-size: 2.8rem;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  font-size: 3rem;
+  text-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(135, 206, 235, 0.3);
   position: relative;
   z-index: 1;
   animation: fadeInDown 1s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 700;
+  letter-spacing: 1px;
+  
+  /* Gradient text effect */
+  background: linear-gradient(
+    45deg,
+    #ffffff 0%,
+    #87ceeb 50%,
+    #ffffff 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: titleShimmer 4s ease-in-out infinite alternate;
   
   &::after {
     content: '';
     position: absolute;
-    bottom: -15px;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 120px;
-    height: 5px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
-    border-radius: 3px;
-    animation: expandLine 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+    width: 150px;
+    height: 4px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(135, 206, 235, 0.8), 
+      rgba(44, 62, 80, 0.8),
+      rgba(135, 206, 235, 0.8), 
+      transparent
+    );
+    border-radius: 2px;
+    animation: expandLine 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 8px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(135, 206, 235, 0.2), 
+      transparent
+    );
+    border-radius: 4px;
+    animation: expandGlow 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.7s both;
+    filter: blur(2px);
   }
   
   @keyframes fadeInDown {
@@ -96,9 +160,19 @@ const SectionTitle = styled.h2`
     to { opacity: 1; transform: translateY(0); }
   }
   
+  @keyframes titleShimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  
   @keyframes expandLine {
     from { width: 0; opacity: 0; }
-    to { width: 120px; opacity: 1; }
+    to { width: 150px; opacity: 1; }
+  }
+  
+  @keyframes expandGlow {
+    from { width: 0; opacity: 0; }
+    to { width: 150px; opacity: 1; }
   }
   
   @media (max-width: 1200px) {
@@ -151,7 +225,7 @@ const ServicesGrid = styled.div`
 `;
 
 const ServiceCard = styled.div`
-  background: rgba(43, 30, 77, 0.85);
+  background: rgba(12, 26, 51, 0.85);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
@@ -160,7 +234,7 @@ const ServiceCard = styled.div`
   flex-direction: column;
   height: 100%;
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(44, 62, 80, 0.4);
   position: relative;
   z-index: 1;
   animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -174,7 +248,7 @@ const ServiceCard = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.2), rgba(52, 73, 94, 0.2));
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: -1;
@@ -182,7 +256,7 @@ const ServiceCard = styled.div`
     border-radius: 20px;
   }
   
-  /* Add cyber glow effect */
+  /* Add holographic effect */
   &::after {
     content: '';
     position: absolute;
@@ -191,51 +265,65 @@ const ServiceCard = styled.div`
     right: -2px;
     bottom: -2px;
     border-radius: 22px;
-    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    background: linear-gradient(45deg, #2c3e6b, #34495e, #2c3e6b);
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: -2;
     blur: 10px;
+    background-size: 300% 300%;
+    animation: holographicShift 3s ease infinite;
   }
   
   &:hover {
-    transform: translateZ(0) translateY(-20px) rotateX(5deg);
-    box-shadow: 0 25px 60px rgba(37, 117, 252, 0.6);
-    background: rgba(43, 30, 77, 0.95);
-    border: 1px solid rgba(106, 17, 203, 0.6);
+    transform: translateZ(0) translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(44, 62, 80, 0.5);
+    background: rgba(12, 26, 51, 0.95);
+    border: 1px solid rgba(44, 62, 80, 0.6);
     
     &::before {
       opacity: 1;
     }
     
-    /* Activate cyber glow on hover */
     &::after {
       opacity: 0.7;
-      box-shadow: 0 0 20px rgba(106, 17, 203, 0.7), 0 0 40px rgba(37, 117, 252, 0.5);
+      box-shadow: 0 0 25px rgba(44, 62, 80, 0.8);
     }
   }
   
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateZ(0) translateY(30px); }
-    to { opacity: 1; transform: translateZ(0) translateY(0); }
+  @keyframes holographicShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
   
   @media (max-width: 1200px) {
     border-radius: 18px;
+    
+    &::after {
+      border-radius: 20px;
+    }
   }
   
-  @media (max-width: 992px) {
+  @media (max-width: 768px) {
     border-radius: 16px;
+    
+    &::after {
+      border-radius: 18px;
+    }
   }
   
   @media (max-width: 576px) {
     border-radius: 15px;
+    
+    &::after {
+      border-radius: 17px;
+    }
   }
 `;
 
 const ServiceImage = styled.div`
   height: 220px;
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  background: linear-gradient(135deg, #0c1a33, #1a2a4a, #2c3e6b);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -255,42 +343,7 @@ const ServiceImage = styled.div`
     background: linear-gradient(
       45deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
-    transform: rotate(45deg);
-    animation: shine 3.5s infinite;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    border: 3px solid rgba(255, 255, 255, 0.4);
-    border-radius: 15px;
-    pointer-events: none;
-    animation: pulseBorder 2.5s infinite;
-  }
-  
-  /* Add holographic effect */
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, .2),
       transparent
     );
     transform: rotate(45deg);
@@ -306,7 +359,7 @@ const ServiceImage = styled.div`
     bottom: 0;
     background: linear-gradient(90deg, 
       transparent 0%, 
-      rgba(255, 255, 255, 0.1) 50%, 
+      rgba(44, 62, 80, .3) 50%, 
       transparent 100%);
     background-size: 200% 100%;
     animation: holographicScan 2s linear infinite;
@@ -316,12 +369,6 @@ const ServiceImage = styled.div`
   @keyframes shine {
     0% { transform: rotate(45deg) translateX(-100%); }
     100% { transform: rotate(45deg) translateX(100%); }
-  }
-  
-  @keyframes pulseBorder {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
   }
   
   /* Holographic scan animation */
@@ -351,7 +398,6 @@ const ServiceImage = styled.div`
   }
 `;
 
-// New styled component for actual service images
 const ServiceActualImage = styled.img`
   width: 100%;
   height: 100%;
@@ -408,7 +454,7 @@ const ServiceName = styled.h3`
     left: 0;
     width: 60px;
     height: 4px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #2c3e6b, #34495e);
     border-radius: 2px;
     animation: expandLine 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
   }
@@ -437,7 +483,7 @@ const ServiceName = styled.h3`
 `;
 
 const ServiceDescription = styled.p`
-  color: #d4c4fb;
+  color: #87ceeb;
   margin: 0 0 25px 0;
   flex-grow: 1;
   line-height: 1.7;
@@ -476,7 +522,7 @@ const ServicePrice = styled.div`
     left: 0;
     width: 100%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(106, 17, 203, 0.7), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 168, 255, 0.7), transparent);
     animation: expandLine 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
   }
   
@@ -500,9 +546,17 @@ const ServicePrice = styled.div`
 
 const Price = styled.span`
   font-weight: bold;
-  color: #a0c4ff;
+  color: #87ceeb;
   font-size: 1.4rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  
+  @keyframes priceGlow {
+    0% { text-shadow: 0 0 5px rgba(135, 206, 235, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(135, 206, 235, 0.8); }
+    100% { text-shadow: 0 0 5px rgba(135, 206, 235, 0.5); }
+  }
+  
+  animation: priceGlow 2s infinite;
   
   @media (max-width: 1200px) {
     font-size: 1.3rem;
@@ -522,7 +576,7 @@ const Price = styled.span`
 `;
 
 const Duration = styled.span`
-  background: rgba(106, 17, 203, 0.4);
+  background: rgba(44, 62, 80, 0.4);
   padding: 8px 16px;
   border-radius: 25px;
   font-size: 1rem;
@@ -534,9 +588,9 @@ const Duration = styled.span`
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   
   &:hover {
-    background: rgba(106, 17, 203, 0.6);
+    background: rgba(44, 62, 80, 0.6);
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(37, 117, 252, 0.3);
+    box-shadow: 0 6px 15px rgba(44, 62, 80, 0.3);
   }
   
   @media (max-width: 1200px) {
@@ -551,7 +605,7 @@ const Duration = styled.span`
   
   @media (max-width: 768px) {
     padding: 6px 12px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
   
   @media (max-width: 576px) {
@@ -560,7 +614,6 @@ const Duration = styled.span`
   }
 `;
 
-// Function to get appropriate icon based on service name
 const getServiceIcon = (serviceName) => {
   const name = serviceName.toLowerCase();
   if (name.includes('soch') || name.includes('hair')) {
@@ -585,7 +638,7 @@ const Services = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/services`);
+      const response = await axios.get(BASE_URL + '/api/services');
       setServices(response.data);
     } catch (error) {
       console.error('Error loading services:', error);
@@ -597,8 +650,7 @@ const Services = () => {
       <SectionTitle>Bizning xizmatlar</SectionTitle>
       <ServicesGrid>
         {services.map((service, index) => (
-          <ServiceCard key={service._id} style={{ animationDelay: `${index * 0.1}s` }}>
-            {/* Display actual image if available, otherwise show icon */}
+          <ServiceCard key={service._id} style={{ animationDelay: (index * 0.1) + 's' }}>
             {service.image ? (
               <ServiceActualImage src={service.image} alt={service.name} />
             ) : (

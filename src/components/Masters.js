@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { FaUser, FaPhone, FaClock, FaStar, FaMedal, FaUserTie } from 'react-icons/fa';
-const BASE_URL ='https://backend-3-gtdh.onrender.com';
+const BASE_URL = 'https://backend-2-1-o1wi.onrender.com';
 
 const MastersSection = styled.section`
   padding: 120px 20px;
-  background: linear-gradient(135deg, #0d0f3d 0%, #2c1a4d 50%, #5a2d82 100%);
+  background: linear-gradient(135deg, #0c1a33 0%, #1a2a4a 50%, #2c3e6b 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -31,6 +31,7 @@ const MastersSection = styled.section`
     animation: twinkle 4s infinite alternate;
   }
   
+  /* Enhanced floating elements for masters */
   &::after {
     content: '';
     position: absolute;
@@ -38,8 +39,12 @@ const MastersSection = styled.section`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.15), rgba(37, 117, 252, 0.15));
-    opacity: 0.4;
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba(135, 206, 235, 0.08) 0%, transparent 60%),
+      radial-gradient(circle at 80% 20%, rgba(135, 206, 235, 0.06) 0%, transparent 60%),
+      radial-gradient(circle at 60% 80%, rgba(135, 206, 235, 0.1) 0%, transparent 60%),
+      radial-gradient(circle at 30% 70%, rgba(135, 206, 235, 0.07) 0%, transparent 60%);
+    animation: mastersParticles 10s ease-in-out infinite;
     pointer-events: none;
     z-index: 0;
   }
@@ -68,25 +73,66 @@ const MastersSection = styled.section`
 
 const SectionTitle = styled.h2`
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   color: white;
-  font-size: 2.8rem;
+  font-size: 3rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  text-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(135, 206, 235, 0.3);
   animation: fadeInDown 1s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 700;
+  letter-spacing: 1px;
+  
+  /* Gradient text effect */
+  background: linear-gradient(
+    45deg,
+    #ffffff 0%,
+    #87ceeb 50%,
+    #ffffff 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: titleShimmer 4s ease-in-out infinite alternate;
   
   &::after {
     content: '';
     position: absolute;
-    bottom: -15px;
+    bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 120px;
-    height: 5px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
-    border-radius: 3px;
-    animation: expandLine 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+    width: 150px;
+    height: 4px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(135, 206, 235, 0.8), 
+      rgba(44, 62, 80, 0.8),
+      rgba(135, 206, 235, 0.8), 
+      transparent
+    );
+    border-radius: 2px;
+    animation: expandLine 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 8px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(135, 206, 235, 0.2), 
+      transparent
+    );
+    border-radius: 4px;
+    animation: expandGlow 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.7s both;
+    filter: blur(2px);
   }
   
   @keyframes fadeInDown {
@@ -94,9 +140,19 @@ const SectionTitle = styled.h2`
     to { opacity: 1; transform: translateY(0); }
   }
   
+  @keyframes titleShimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  
   @keyframes expandLine {
     from { width: 0; opacity: 0; }
-    to { width: 120px; opacity: 1; }
+    to { width: 150px; opacity: 1; }
+  }
+  
+  @keyframes expandGlow {
+    from { width: 0; opacity: 0; }
+    to { width: 150px; opacity: 1; }
   }
   
   @media (max-width: 1200px) {
@@ -149,18 +205,19 @@ const MastersGrid = styled.div`
 `;
 
 const MasterCard = styled.div`
-  background: rgba(43, 30, 77, 0.85);
+  background: rgba(12, 26, 51, 0.85);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(44, 62, 80, 0.4);
   position: relative;
   z-index: 1;
   animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateZ(0);
   transform-style: preserve-3d;
+  perspective: 1000px;
   
   &::before {
     content: '';
@@ -169,7 +226,7 @@ const MasterCard = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.2), rgba(52, 73, 94, 0.2));
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: -1;
@@ -177,7 +234,7 @@ const MasterCard = styled.div`
     border-radius: 20px;
   }
   
-  /* Add liquid animation effect */
+  /* Add 3D effect */
   &::after {
     content: '';
     position: absolute;
@@ -186,7 +243,7 @@ const MasterCard = styled.div`
     right: -10px;
     bottom: -10px;
     border-radius: 30px;
-    background: radial-gradient(circle, rgba(106, 17, 203, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(44, 62, 80, 0.1) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: -2;
@@ -194,87 +251,54 @@ const MasterCard = styled.div`
   }
   
   &:hover {
-    transform: translateZ(0) translateY(-20px) rotateX(5deg);
-    box-shadow: 0 25px 60px rgba(37, 117, 252, 0.6);
-    background: rgba(43, 30, 77, 0.95);
-    border: 1px solid rgba(106, 17, 203, 0.6);
+    transform: translateZ(0) translateY(-20px) rotateX(10deg) rotateY(5deg);
+    box-shadow: 0 25px 60px rgba(44, 62, 80, 0.6);
+    background: rgba(12, 26, 51, 0.95);
+    border: 1px solid rgba(44, 62, 80, 0.6);
     
     &::before {
       opacity: 1;
     }
     
-    /* Activate liquid effect on hover */
     &::after {
       opacity: 0.5;
+      box-shadow: 0 0 30px rgba(44, 62, 80, 0.7);
     }
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateZ(0) translateY(30px); }
-    to { opacity: 1; transform: translateZ(0) translateY(0); }
-  }
-  
-  /* Liquid wave animation */
-  @keyframes liquidWave {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
   }
   
   @media (max-width: 1200px) {
     border-radius: 18px;
+    
+    &::after {
+      border-radius: 28px;
+    }
   }
   
-  @media (max-width: 992px) {
+  @media (max-width: 768px) {
     border-radius: 16px;
+    
+    &::after {
+      border-radius: 26px;
+    }
   }
   
   @media (max-width: 576px) {
     border-radius: 15px;
+    
+    &::after {
+      border-radius: 25px;
+    }
   }
 `;
 
 const MasterImage = styled.div`
   height: 270px;
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  background: linear-gradient(135deg, #0c1a33, #1a2a4a, #2c3e6b);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 4.5rem;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
-    transform: rotate(45deg);
-    animation: shine 3.5s infinite;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    border: 3px solid rgba(255, 255, 255, 0.4);
-    border-radius: 15px;
-    pointer-events: none;
-    animation: pulseBorder 2.5s infinite;
-  }
-  
-  /* Add quantum field effect */
   position: relative;
   overflow: hidden;
   
@@ -314,12 +338,6 @@ const MasterImage = styled.div`
   @keyframes shine {
     0% { transform: rotate(45deg) translateX(-100%); }
     100% { transform: rotate(45deg) translateX(100%); }
-  }
-  
-  @keyframes pulseBorder {
-    0% { opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { opacity: 0.6; }
   }
   
   /* Quantum pulse animation */
@@ -386,7 +404,7 @@ const MasterName = styled.h3`
     left: 0;
     width: 65px;
     height: 4px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #2c3e6b, #34495e);
     border-radius: 2px;
     animation: expandLine 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
   }
@@ -427,7 +445,7 @@ const InfoItem = styled.div`
   justify-content: space-between;
   margin-bottom: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(242, 11, 11, 0.2);
   position: relative;
   align-items: center;
   
@@ -438,7 +456,7 @@ const InfoItem = styled.div`
     left: 0;
     width: 100%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(106, 17, 203, 0.7), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 170, 255, 1), transparent);
     animation: expandLine 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
   }
   
@@ -472,7 +490,7 @@ const InfoItem = styled.div`
 `;
 
 const InfoLabel = styled.span`
-  color: #d4c4fb;
+  color: #87ceeb;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -519,7 +537,7 @@ const InfoValue = styled.span`
 `;
 
 const Specialization = styled.div`
-  background: rgba(106, 17, 203, 0.4);
+  background: rgba(44, 62, 80, 0.4);
   padding: 10px 18px;
   border-radius: 25px;
   display: inline-flex;
@@ -540,16 +558,16 @@ const Specialization = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.3), rgba(37, 117, 252, 0.3));
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.3), rgba(52, 73, 94, 0.3));
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: -1;
   }
   
   &:hover {
-    background: rgba(106, 17, 203, 0.6);
+    background: rgba(44, 62, 80, 0.6);
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(37, 117, 252, 0.3);
+    box-shadow: 0 6px 15px rgba(44, 62, 80, 0.3);
     
     &::before {
       opacity: 1;
@@ -586,6 +604,13 @@ const Rating = styled.div`
   color: #FFD700;
   font-weight: 600;
   margin-top: 15px;
+  animation: pulse 2s infinite;
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
   
   @media (max-width: 576px) {
     margin-top: 12px;
@@ -602,7 +627,7 @@ const Masters = () => {
 
   const fetchMasters = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/masters`);
+      const response = await axios.get(BASE_URL + '/api/masters');
       setMasters(response.data);
     } catch (error) {
       console.error('Error loading masters:', error);
@@ -619,7 +644,7 @@ const Masters = () => {
       <SectionTitle>Bizning barberlar</SectionTitle>
       <MastersGrid>
         {masters.map((master, index) => (
-          <MasterCard key={master._id} style={{ animationDelay: `${index * 0.1}s` }}>
+          <MasterCard key={master._id} style={{ animationDelay: (index * 0.1) + 's' }}>
             <MasterImage>
               <FaUserTie />
             </MasterImage>

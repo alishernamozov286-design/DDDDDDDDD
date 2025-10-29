@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { FaUser, FaPhone, FaCalendarAlt, FaClock, FaCut, FaUserTie, FaCheckCircle, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
-const BASE_URL ='https://backend-3-gtdh.onrender.com';
+import { FaUser, FaPhone, FaClock, FaCut, FaUserTie, FaCheckCircle, FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
+
+const BASE_URL = 'https://backend-2-1-o1wi.onrender.com';
 
 const BookingSection = styled.section`
   padding: 120px 20px;
-  background: linear-gradient(135deg, #0d0f3d 0%, #2c1a4d 50%, #5a2d82 100%);
+  background: linear-gradient(135deg, #0c1a33 0%, #1a2a4a 50%, #2c3e6b 100%);
   position: relative;
   overflow: hidden;
   
@@ -30,9 +31,31 @@ const BookingSection = styled.section`
     animation: twinkle 4s infinite alternate;
   }
   
+  /* Floating particles effect */
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    animation: floatingParticles 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
   @keyframes twinkle {
     0% { opacity: 0.15; }
     100% { opacity: 0.35; }
+  }
+  
+  @keyframes floatingParticles {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(120deg); }
+    66% { transform: translateY(5px) rotate(240deg); }
   }
   
   @media (max-width: 1200px) {
@@ -70,7 +93,7 @@ const SectionTitle = styled.h2`
     transform: translateX(-50%);
     width: 120px;
     height: 5px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #2c3e6b, #34495e);
     border-radius: 3px;
     animation: expandLine 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
   }
@@ -107,12 +130,15 @@ const SectionTitle = styled.h2`
 const BookingContainer = styled.div`
   max-width: 850px;
   margin: 0 auto;
-  background: rgba(43, 30, 77, 0.85);
+  background: rgba(12, 26, 51, 0.85);
   border-radius: 25px;
   padding: 50px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(44, 62, 80, 0.4);
   position: relative;
   z-index: 1;
   animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1);
@@ -127,7 +153,7 @@ const BookingContainer = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgba(106, 17, 203, 0.2), rgba(37, 117, 252, 0.2));
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.3), rgba(52, 73, 94, 0.3));
     opacity: 0;
     transition: opacity 0.4s ease;
     z-index: -1;
@@ -146,11 +172,10 @@ const BookingContainer = styled.div`
     border-radius: 40px;
     background: conic-gradient(
       from 0deg at 50% 50%,
-      rgba(106, 17, 203, 0.1),
-      rgba(37, 117, 252, 0.1),
-      rgba(255, 65, 108, 0.1),
-      rgba(255, 75, 43, 0.1),
-      rgba(106, 17, 203, 0.1)
+      rgba(44, 62, 80, 0.2),
+      rgba(52, 73, 94, 0.2),
+      rgba(44, 62, 80, 0.2),
+      rgba(44, 62, 80, 0.2)
     );
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -160,7 +185,7 @@ const BookingContainer = styled.div`
   
   &:hover {
     transform: translateZ(0) translateY(-15px) rotateX(3deg);
-    box-shadow: 0 25px 70px rgba(37, 117, 252, 0.5);
+    box-shadow: 0 25px 70px rgba(44, 62, 80, 0.5);
     
     &::before {
       opacity: 1;
@@ -219,7 +244,7 @@ const FormGroup = styled.div`
     left: 0;
     width: 0;
     height: 3px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #2c3e6b, #34495e);
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
@@ -242,7 +267,7 @@ const Label = styled.label`
   font-weight: 600;
   color: #ffffff;
   font-size: 1.15rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 1);
   position: relative;
   display: flex;
   align-items: center;
@@ -255,7 +280,7 @@ const Label = styled.label`
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    background: linear-gradient(90deg, #2c3e6b, #34495e);
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
@@ -291,14 +316,14 @@ const InputWrapper = styled.div`
 const IconWrapper = styled.div`
   position: absolute;
   left: 15px;
-  color: #6a11cb;
+  color: #87ceeb;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   pointer-events: none;
-  background: rgba(106, 17, 203, 0.2);
+  background: rgba(44, 62, 80, 0.2);
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -308,7 +333,7 @@ const IconWrapper = styled.div`
   transition: all 0.3s ease;
   
   ${InputWrapper}:hover & {
-    background: rgba(106, 17, 203, 0.3);
+    background: rgba(44, 62, 80, 0.3);
     transform: scale(1.1);
   }
   
@@ -328,10 +353,10 @@ const IconWrapper = styled.div`
 const Input = styled.input`
   width: 100%;
   padding: 16px 20px 16px 65px;
-  border: 2px solid rgba(106, 17, 203, 0.4);
+  border: 2px solid rgba(44, 62, 80, 0.4);
   border-radius: 12px;
   font-size: 1.05rem;
-  background: rgba(30, 20, 50, 0.7);
+  background: rgba(12, 26, 51, 0.7);
   color: white;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -340,19 +365,19 @@ const Input = styled.input`
   
   &:focus {
     outline: none;
-    border-color: #6a11cb;
-    box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.4), 0 0 20px rgba(37, 117, 252, 0.6);
-    background: rgba(30, 20, 50, 0.9);
+    border-color: #87ceeb;
+    box-shadow: 0 0 0 4px rgba(44, 62, 80, 0.4), 0 0 20px rgba(44, 62, 80, 0.6);
+    background: rgba(12, 26, 51, 0.9);
     transform: translateZ(0) translateY(-5px);
   }
   
   &:hover {
-    box-shadow: 0 6px 20px rgba(37, 117, 252, 0.4);
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
     transform: translateZ(0) translateY(-2px);
   }
   
   &::placeholder {
-    color: rgba(212, 196, 251, 0.8);
+    color: rgba(224, 224, 255, 0.8);
   }
   
   /* Style for date input calendar icon */
@@ -361,14 +386,14 @@ const Input = styled.input`
     padding-right: 55px;
     
     &::-webkit-calendar-picker-indicator {
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      background: linear-gradient(45deg, #2c3e6b, #34495e);
       width: 28px;
       height: 28px;
       padding: 5px;
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 3px 10px rgba(37, 117, 252, 0.5);
+      box-shadow: 0 3px 10px rgba(44, 62, 80, 0.5);
       position: absolute;
       right: 12px;
       top: 50%;
@@ -376,9 +401,9 @@ const Input = styled.input`
     }
     
     &::-webkit-calendar-picker-indicator:hover {
-      background: linear-gradient(45deg, #2575fc, #6a11cb);
+      background: linear-gradient(45deg, #34495e, #2c3e6b);
       transform: translateZ(0) translateY(-50%) scale(1.2);
-      box-shadow: 0 5px 15px rgba(37, 117, 252, 0.7);
+      box-shadow: 0 5px 15px rgba(44, 62, 80, 0.7);
     }
   }
   
@@ -394,7 +419,7 @@ const Input = styled.input`
     right: -2px;
     bottom: -2px;
     border-radius: 14px;
-    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    background: linear-gradient(45deg, #2c3e6b, #34495e);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: -1;
@@ -402,7 +427,7 @@ const Input = styled.input`
   
   &:focus::after {
     opacity: 0.5;
-    box-shadow: 0 0 15px rgba(106, 17, 203, 0.7), 0 0 30px rgba(37, 117, 252, 0.5);
+    box-shadow: 0 0 15px rgba(44, 62, 80, 0.7), 0 0 30px rgba(44, 62, 80, 0.5);
   }
   
   @media (max-width: 1200px) {
@@ -431,15 +456,15 @@ const Input = styled.input`
 const Select = styled.select`
   width: 100%;
   padding: 16px 20px 16px 65px;
-  border: 2px solid rgba(106, 17, 203, 0.4);
+  border: 2px solid rgba(44, 62, 80, 0.4);
   border-radius: 12px;
   font-size: 1.05rem;
-  background: rgba(30, 20, 50, 0.7);
+  background: rgba(12, 26, 51, 0.7);
   color: white;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2387ceeb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 18px center;
   background-size: 20px;
@@ -447,14 +472,14 @@ const Select = styled.select`
   
   &:focus {
     outline: none;
-    border-color: #6a11cb;
-    box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.4);
-    background: rgba(30, 20, 50, 0.9);
+    border-color: #87ceeb;
+    box-shadow: 0 0 0 4px rgba(44, 62, 80, 0.4);
+    background: rgba(12, 26, 51, 0.9);
     transform: translateY(-2px);
   }
   
   option {
-    background: rgba(43, 30, 77, 0.95);
+    background: rgba(12, 26, 51, 0.95);
     color: white;
   }
   
@@ -481,60 +506,10 @@ const Select = styled.select`
   }
 `;
 
-const TextArea = styled.textarea`
-  width: 100%;
-  padding: 16px 20px 16px 65px;
-  border: 2px solid rgba(106, 17, 203, 0.4);
-  border-radius: 12px;
-  font-size: 1.05rem;
-  background: rgba(30, 20, 50, 0.7);
-  color: white;
-  min-height: 140px;
-  resize: vertical;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  
-  &:focus {
-    outline: none;
-    border-color: #6a11cb;
-    box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.4);
-    background: rgba(30, 20, 50, 0.9);
-    transform: translateY(-2px);
-  }
-  
-  &::placeholder {
-    color: rgba(212, 196, 251, 0.8);
-  }
-  
-  @media (max-width: 1200px) {
-    padding: 15px 20px 15px 60px;
-    font-size: 1rem;
-    min-height: 130px;
-  }
-  
-  @media (max-width: 992px) {
-    padding: 14px 18px 14px 55px;
-    font-size: 0.95rem;
-    min-height: 120px;
-  }
-  
-  @media (max-width: 768px) {
-    padding: 13px 16px 13px 50px;
-    font-size: 0.9rem;
-    min-height: 110px;
-    border-radius: 10px;
-  }
-  
-  @media (max-width: 576px) {
-    padding: 12px 15px 12px 45px;
-    font-size: 0.85rem;
-    min-height: 100px;
-    border-radius: 8px;
-  }
-`;
+
 
 const Button = styled.button`
-  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  background: linear-gradient(45deg, #2c3e6b, #34495e);
   color: white;
   border: none;
   padding: 16px 35px;
@@ -544,7 +519,7 @@ const Button = styled.button`
   font-weight: 600;
   width: 100%;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 6px 25px rgba(37, 117, 252, 0.5);
+  box-shadow: 0 6px 25px rgba(44, 62, 80, 0.5);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -555,8 +530,8 @@ const Button = styled.button`
   
   &:hover {
     transform: translateY(-5px) translateZ(0);
-    box-shadow: 0 12px 30px rgba(37, 117, 252, 0.7);
-    background: linear-gradient(45deg, #2575fc, #6a11cb);
+    box-shadow: 0 12px 30px rgba(44, 62, 80, 0.7);
+    background: linear-gradient(45deg, #34495e, #2c3e6b);
   }
   
   &:disabled {
@@ -623,9 +598,9 @@ const Alert = styled.div`
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   
   ${props => props.type === 'success' && `
-    background: linear-gradient(45deg, rgba(76, 175, 80, 0.4), rgba(139, 195, 74, 0.4));
-    color: #c8e6c9;
-    border: 1px solid rgba(76, 175, 80, 0.6);
+    background: linear-gradient(45deg, rgba(44, 62, 80, 0.4), rgba(52, 73, 94, 0.4));
+    color: #e0e0ff;
+    border: 1px solid rgba(44, 62, 80, 0.6);
   `}
   
   ${props => props.type === 'error' && `
@@ -661,14 +636,14 @@ const Alert = styled.div`
 
 const TimeSlot = styled.button`
   background: ${props => props.selected 
-    ? 'linear-gradient(45deg, #6a11cb, #2575fc)' 
-    : 'rgba(30, 20, 50, 0.7)'};
+    ? 'linear-gradient(45deg, #2c3e6b, #34495e)' 
+    : 'rgba(12, 26, 51, 0.7)'};
   color: ${props => props.selected 
     ? 'white' 
-    : '#d4c4fb'};
+    : '#e0e0ff'};
   border: 2px solid ${props => props.selected 
-    ? '#6a11cb' 
-    : 'rgba(106, 17, 203, 0.5)'};
+    ? '#2c3e6b' 
+    : 'rgba(44, 62, 80, 0.5)'};
   padding: 14px 18px;
   border-radius: 10px;
   cursor: pointer;
@@ -687,10 +662,10 @@ const TimeSlot = styled.button`
   
   &:hover {
     background: ${props => props.selected 
-      ? 'linear-gradient(45deg, #2575fc, #6a11cb)' 
-      : 'rgba(106, 17, 203, 0.5)'};
+      ? 'linear-gradient(45deg, #34495e, #2c3e6b)' 
+      : 'rgba(44, 62, 80, 0.5)'};
     transform: translateZ(0) translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(37, 117, 252, 0.4);
+    box-shadow: 0 8px 20px rgba(44, 62, 80, 0.4);
   }
   
   &:active {
@@ -765,16 +740,53 @@ const TimeSlotsContainer = styled.div`
   }
 `;
 
+const CyberGlow = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 25px;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent,
+      rgba(44, 62, 80, 0.2),
+      transparent,
+      rgba(52, 73, 94, 0.2),
+      transparent
+    );
+    animation: cyberRotate 4s linear infinite;
+    opacity: 0.3;
+  }
+  
+  @keyframes cyberRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+
+
 const BookingForm = () => {
   const [services, setServices] = useState([]);
   const [masters, setMasters] = useState([]);
   const [formData, setFormData] = useState({
-    customerName: '',
-    customerPhone: '',
-    serviceId: '',
-    masterId: '',
-    appointmentDate: '',
-    appointmentTime: ''
+    customerName: "",
+    customerPhone: "",
+    serviceId: "",
+    masterId: "",
+    appointmentDate: "",
+    appointmentTime: "",
   });
   const [availableTimes, setAvailableTimes] = useState([]);
   const [alert, setAlert] = useState(null);
@@ -788,307 +800,273 @@ const BookingForm = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/services`);
+      const response = await axios.get(BASE_URL + '/api/services');
       setServices(response.data);
     } catch (error) {
-      console.error('Error loading services:', error);
+      console.error("Error loading services:", error);
     }
   };
 
   const fetchMasters = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/masters`);
+      const response = await axios.get(BASE_URL + '/api/masters');
       setMasters(response.data);
     } catch (error) {
-      console.error('Error loading masters:', error);
+      console.error("Error loading masters:", error);
     }
   };
 
-  // Map JavaScript day index to Uzbek day names
   const getUzbekDayName = (dayIndex) => {
-    const days = ['Yakshanba', 'Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba'];
+    const days = [
+      "Yakshanba",
+      "Dushanba",
+      "Seshanba",
+      "Chorshanba",
+      "Payshanba",
+      "Juma",
+      "Shanba",
+    ];
     return days[dayIndex];
   };
 
-  // Function to add minutes to a time string (HH:MM)
-  const addMinutesToTime = (time, minutes) => {
-    const [hours, mins] = time.split(':').map(Number);
-    const date = new Date();
-    date.setHours(hours, mins, 0, 0);
-    date.setMinutes(date.getMinutes() + minutes);
-    return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-  };
-
-  // Function to check if two time ranges overlap
-  const timesOverlap = (start1, end1, start2, end2) => {
-    return start1 < end2 && start2 < end1;
-  };
-
   const generateTimeSlots = async (startTime, endTime, masterId, date, serviceId) => {
-    // Get the service duration
-    const service = services.find(s => s._id === serviceId);
+    const timeToMinutes = (t) => {
+      const [hh, mm] = t.split(":").map(Number);
+      return hh * 60 + mm;
+    };
+    const minutesToTime = (mins) => {
+      const n = ((mins % 1440) + 1440) % 1440;
+      const hh = String(Math.floor(n / 60)).padStart(2, "0");
+      const mm = String(n % 60).padStart(2, "0");
+      return hh + ":" + mm;
+    };
+
+    const service = services.find((s) => s._id === serviceId);
     if (!service) return [];
-    
-    const duration = service.duration; // in minutes
-    
-    // Get existing bookings for this master on this date
-    let existingBookings = [];
+    const duration = Number(service.duration) || 0;
+
+    const startMin = timeToMinutes(startTime);
+    const endMin = timeToMinutes(endTime);
+
+    // Mavjud bronlarni olish
+    let bookedTimes = [];
     try {
       const response = await axios.get(`${BASE_URL}/api/bookings`);
-      existingBookings = response.data.filter(booking => 
-        booking.masterId && booking.masterId._id === masterId && 
-        new Date(booking.appointmentDate).toDateString() === new Date(date).toDateString()
-      );
+      const bookings = response.data;
+      
+      // Shu kun va shu usta uchun band vaqtlarni topish
+      bookedTimes = bookings
+        .filter(booking => 
+          booking.masterId._id === masterId &&
+          new Date(booking.appointmentDate).toDateString() === new Date(date).toDateString() &&
+          booking.status !== 'bekor_qilingan' &&
+          !booking.isDeleted
+        )
+        .map(booking => booking.appointmentTime);
     } catch (error) {
-      console.error('Error fetching bookings:', error);
+      console.error("Mavjud bronlarni olishda xatolik:", error);
     }
-    
+
+    // Barcha vaqt slotlarini yaratish va band bo'lganlarini chiqarib tashlash
+    const today = new Date();
+    const isToday = new Date(date).toDateString() === today.toDateString();
+    const nowMinutes = isToday ? today.getHours() * 60 + today.getMinutes() : -1;
+
     const slots = [];
-    let currentTime = startTime;
-    
-    // Generate time slots at 30-minute intervals
-    while (currentTime < endTime) {
-      const slotEnd = addMinutesToTime(currentTime, duration);
+    for (let t = startMin; t + duration <= endMin; t += 30) {
+      const timeSlot = minutesToTime(t);
       
-      // Check if this slot is within working hours
-      if (slotEnd <= endTime) {
-        // Check for conflicts with existing bookings
-        let hasConflict = false;
-        for (const booking of existingBookings) {
-          // Make sure serviceId exists and has duration
-          if (!booking.serviceId || !booking.serviceId.duration) continue;
-          
-          const bookingStart = booking.appointmentTime;
-          const bookingEnd = addMinutesToTime(bookingStart, booking.serviceId.duration);
-          
-          // Check if the time slots overlap
-          if (timesOverlap(currentTime, slotEnd, bookingStart, bookingEnd)) {
-            hasConflict = true;
-            break;
-          }
-        }
-        
-        if (!hasConflict) {
-          slots.push(currentTime);
-        }
+      // O'tgan vaqtlarni chiqarib tashlash
+      if (isToday && t < nowMinutes) continue;
+      
+      // Band vaqtlarni chiqarib tashlash
+      if (!bookedTimes.includes(timeSlot)) {
+        slots.push(timeSlot);
       }
-      
-      // Move to next 30-minute slot
-      currentTime = addMinutesToTime(currentTime, 30);
     }
-    
+
     return slots;
   };
 
   const handleMasterChange = async (e) => {
     const masterId = e.target.value;
-    setFormData(prev => ({
-      ...prev,
-      masterId
-    }));
-    
-    // If master, date, and service are all selected, generate time slots
-    if (masterId && formData.appointmentDate && formData.serviceId) {
-      const master = masters.find(m => m._id === masterId);
-      if (master) {
-        // Check if master works on the selected date
-        const selectedDate = new Date(formData.appointmentDate);
-        const dayName = getUzbekDayName(selectedDate.getDay());
-        
-        const worksOnDay = master.workingDays.includes(dayName);
-        setMasterWorksOnSelectedDay(worksOnDay);
-        
-        if (worksOnDay) {
-          try {
-            const times = await generateTimeSlots(
-              master.workingHours.start, 
-              master.workingHours.end, 
-              masterId, 
-              formData.appointmentDate,
-              formData.serviceId
-            );
-            setAvailableTimes(times);
-          } catch (error) {
-            console.error('Error generating time slots:', error);
-            setAvailableTimes([]);
-          }
-        } else {
-          setAvailableTimes([]);
-          setAlert({ type: 'warning', message: `Bu usta ${dayName} ishlamaydi! Iltimos, boshqa kunni tanlang.` });
-        }
-      }
-    } else if (masterId) {
-      // Only master selected, no date yet
-      const master = masters.find(m => m._id === masterId);
-      if (master) {
-        // Clear any previous warnings
-        setAlert(null);
-      }
-    } else {
-      // No master selected
-      setAvailableTimes([]);
-      setAlert(null);
+    const newForm = { ...formData, masterId };
+    setFormData(newForm);
+    setAvailableTimes([]);
+
+    if (masterId && newForm.appointmentDate && newForm.serviceId) {
+      await updateAvailableTimes(newForm);
     }
   };
 
   const handleDateChange = async (e) => {
-    const date = e.target.value;
-    setFormData(prev => ({
-      ...prev,
-      appointmentDate: date
-    }));
-    
-    // If master, date, and service are all selected, generate time slots
-    if (formData.masterId && date && formData.serviceId) {
-      const master = masters.find(m => m._id === formData.masterId);
-      if (master) {
-        const selectedDate = new Date(date);
-        const dayName = getUzbekDayName(selectedDate.getDay());
-        
-        const worksOnDay = master.workingDays.includes(dayName);
-        setMasterWorksOnSelectedDay(worksOnDay);
-        
-        if (worksOnDay) {
-          try {
-            const times = await generateTimeSlots(
-              master.workingHours.start, 
-              master.workingHours.end, 
-              formData.masterId, 
-              date,
-              formData.serviceId
-            );
-            setAvailableTimes(times);
-            // Clear any previous warnings if they were about working days
-            if (alert && alert.message.includes('ishlamaydi')) {
-              setAlert(null);
-            }
-          } catch (error) {
-            console.error('Error generating time slots:', error);
-            setAvailableTimes([]);
-          }
-        } else {
-          setAvailableTimes([]);
-          setAlert({ type: 'warning', message: `Bu usta ${dayName} ishlamaydi! Iltimos, boshqa kunni tanlang.` });
-        }
-      }
+    const appointmentDate = e.target.value;
+    const newForm = { ...formData, appointmentDate };
+    setFormData(newForm);
+    setAvailableTimes([]);
+
+    if (newForm.masterId && appointmentDate && newForm.serviceId) {
+      await updateAvailableTimes(newForm);
     }
   };
 
   const handleServiceChange = async (e) => {
     const serviceId = e.target.value;
-    setFormData(prev => ({
-      ...prev,
-      serviceId
-    }));
-    
-    // If master, date, and service are all selected, generate time slots
-    if (formData.masterId && formData.appointmentDate && serviceId) {
-      const master = masters.find(m => m._id === formData.masterId);
-      if (master) {
-        const selectedDate = new Date(formData.appointmentDate);
-        const dayName = getUzbekDayName(selectedDate.getDay());
-        
-        const worksOnDay = master.workingDays.includes(dayName);
-        setMasterWorksOnSelectedDay(worksOnDay);
-        
-        if (worksOnDay) {
-          try {
-            const times = await generateTimeSlots(
-              master.workingHours.start, 
-              master.workingHours.end, 
-              formData.masterId, 
-              formData.appointmentDate,
-              serviceId
-            );
-            setAvailableTimes(times);
-          } catch (error) {
-            console.error('Error generating time slots:', error);
-            setAvailableTimes([]);
-          }
-        } else {
-          setAvailableTimes([]);
-          setAlert({ type: 'warning', message: `Bu usta ${dayName} ishlamaydi! Iltimos, boshqa kunni tanlang.` });
-        }
+    const newForm = { ...formData, serviceId };
+    setFormData(newForm);
+    setAvailableTimes([]);
+
+    if (newForm.masterId && newForm.appointmentDate && serviceId) {
+      await updateAvailableTimes(newForm);
+    }
+  };
+
+  const updateAvailableTimes = async (form) => {
+    const master = masters.find((m) => m._id === form.masterId);
+    if (!master) return;
+
+    const selectedDate = new Date(form.appointmentDate);
+    const dayName = getUzbekDayName(selectedDate.getDay());
+    const worksOnDay = master.workingDays.includes(dayName);
+    setMasterWorksOnSelectedDay(worksOnDay);
+
+    if (worksOnDay) {
+      try {
+        const times = await generateTimeSlots(
+          master.workingHours.start,
+          master.workingHours.end,
+          form.masterId,
+          form.appointmentDate,
+          form.serviceId
+        );
+        setAvailableTimes(times);
+        setAlert(null);
+      } catch (err) {
+        console.error("Error generating time slots:", err);
+        setAvailableTimes([]);
       }
+    } else {
+      setAvailableTimes([]);
+      setAlert({
+        type: "warning",
+        message: 'Bu usta ' + dayName + ' ishlamaydi! Iltimos, boshqa kunni tanlang.',
+      });
     }
   };
 
   const handlePhoneChange = (e) => {
-    const value = e.target.value;
-    // Remove any non-digit characters
-    const digitsOnly = value.replace(/\D/g, '');
-    // Limit to 9 digits maximum
-    if (digitsOnly.length <= 9) {
-      setFormData(prev => ({ ...prev, customerPhone: digitsOnly }));
+    let value = e.target.value.replace(/\D/g, "");
+    
+    // If user types +998, ignore it since it's already displayed
+    if (value.startsWith("998")) {
+      value = value.substring(3);
     }
+    
+    // Limit to 9 digits
+    if (value.length > 9) {
+      value = value.substring(0, 9);
+    }
+    
+    setFormData((prev) => ({ ...prev, customerPhone: value }));
   };
 
-  const handleTimeSelect = (time) => {
-    setFormData(prev => ({
-      ...prev,
-      appointmentTime: time
-    }));
+  const formatPhoneNumber = (value) => {
+    if (!value) return "+998 ";
+    
+    const cleaned = value.replace(/\D/g, "");
+    let formatted = "+998";
+    
+    if (cleaned.length > 0) {
+      formatted += " " + cleaned.substring(0, 2);
+    }
+    if (cleaned.length > 2) {
+      formatted += " " + cleaned.substring(2, 5);
+    }
+    if (cleaned.length > 5) {
+      formatted += " " + cleaned.substring(5, 7);
+    }
+    if (cleaned.length > 7) {
+      formatted += " " + cleaned.substring(7, 9);
+    }
+    
+    return formatted;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validation
-    if (!formData.customerName || !formData.customerPhone || !formData.serviceId || 
-        !formData.masterId || !formData.appointmentDate || !formData.appointmentTime) {
-      setAlert({ type: 'error', message: 'Iltimos, barcha maydonlarni to\'ldiring!' });
+    if (
+      !formData.customerName ||
+      !formData.customerPhone ||
+      !formData.serviceId ||
+      !formData.masterId ||
+      !formData.appointmentDate ||
+      !formData.appointmentTime
+    ) {
+      setAlert({
+        type: "error",
+        message: "Iltimos, barcha maydonlarni to'ldiring!"
+      });
       return;
     }
-    
-    // Validate phone number length
+
     if (formData.customerPhone.length !== 9) {
-      setAlert({ type: 'error', message: 'Telefon raqam 9 ta raqamdan iborat bo\'lishi kerak!' });
+      setAlert({
+        type: "error",
+        message: "Telefon raqam 9 ta raqamdan iborat bo'lishi kerak! (+998 XX XXX XX XX)"
+      });
       return;
     }
-    
-    // Check if master works on selected day before submitting
-    const master = masters.find(m => m._id === formData.masterId);
+
+    const master = masters.find((m) => m._id === formData.masterId);
     const selectedDate = new Date(formData.appointmentDate);
     const dayName = getUzbekDayName(selectedDate.getDay());
-    
+
     if (!master.workingDays.includes(dayName)) {
-      setAlert({ type: 'warning', message: `Bu usta ${dayName} ishlamaydi! Iltimos, boshqa kunni tanlang.` });
+      setAlert({
+        type: "warning",
+        message: 'Bu usta ' + dayName + ' ishlamaydi! Iltimos, boshqa kunni tanlang.'
+      });
       return;
     }
-    
+
     try {
       setLoading(true);
-      
-      // Get service price
-      const service = services.find(s => s._id === formData.serviceId);
+      const service = services.find((s) => s._id === formData.serviceId);
       const totalPrice = service ? service.price : 0;
-      
-      // Remove email from booking data if it's empty
-      const bookingData = {
-        ...formData,
-        totalPrice
-      };
-      
-      await axios.post(`${BASE_URL}/api/bookings`, bookingData);
-      
-      setAlert({ type: 'success', message: 'Buyurtma muvaffaqiyatli yaratildi!' });
-      
-      // Reset form
-      setFormData({
-        customerName: '',
-        customerPhone: '',
-        serviceId: '',
-        masterId: '',
-        appointmentDate: '',
-        appointmentTime: ''
+
+      const bookingData = { ...formData, totalPrice };
+      await axios.post(BASE_URL + '/api/bookings', bookingData);
+
+      setAlert({
+        type: "success",
+        message: "Buyurtma muvaffaqiyatli yaratildi! Telegram botga xabar yuborildi va ustalar paneliga qo'shildi."
       });
-      setAvailableTimes([]);
-      setMasterWorksOnSelectedDay(true);
       
-      // Hide success message after 5 seconds
-      setTimeout(() => setAlert(null), 5000);
+      // Formani tozalash
+      setFormData({
+        customerName: "",
+        customerPhone: "",
+        serviceId: "",
+        masterId: "",
+        appointmentDate: "",
+        appointmentTime: "",
+      });
     } catch (error) {
-      setAlert({ type: 'error', message: 'Xatolik yuz berdi: ' + (error.response?.data?.message || error.message) });
+      console.error("Error creating booking:", error);
+      
+      // Vaqt toqnashuvi xatosini alohida ko'rsatish
+      if (error.response?.data?.conflict) {
+        setAlert({
+          type: "warning",
+          message: error.response.data.message
+        });
+      } else {
+        setAlert({
+          type: "error",
+          message: "Buyurtma yaratishda xatolik yuz berdi: " + (error.response?.data?.message || error.message)
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -1098,15 +1076,15 @@ const BookingForm = () => {
     <BookingSection id="booking">
       <SectionTitle>Buyurtma berish</SectionTitle>
       <BookingContainer>
+        <CyberGlow />
         {alert && (
           <Alert type={alert.type}>
-            {alert.type === 'success' && <FaCheckCircle size={26} />}
-            {alert.type === 'error' && <FaExclamationTriangle size={26} />}
-            {alert.type === 'warning' && <FaInfoCircle size={26} />}
+            {alert.type === 'success' && <FaCheckCircle />}
+            {alert.type === 'error' && <FaExclamationTriangle />}
+            {alert.type === 'warning' && <FaInfoCircle />}
             {alert.message}
           </Alert>
         )}
-        
         <form onSubmit={handleSubmit}>
           <FormGroup>
             <Label htmlFor="customerName">
@@ -1139,10 +1117,10 @@ const BookingForm = () => {
                 type="tel"
                 id="customerPhone"
                 name="customerPhone"
-                value={formData.customerPhone}
+                value={formatPhoneNumber(formData.customerPhone)}
                 onChange={handlePhoneChange}
-                placeholder="998901234567"
-                maxLength="9"
+                placeholder="+998 XX XXX XX XX"
+                maxLength="17"
               />
             </InputWrapper>
           </FormGroup>
@@ -1197,12 +1175,10 @@ const BookingForm = () => {
           
           <FormGroup>
             <Label htmlFor="appointmentDate">
-              {/* <FaCalendarAlt /> */}
               Sana *
             </Label>
             <InputWrapper>
               <IconWrapper>
-                {/* <FaCalendarAlt /> */}
               </IconWrapper>
               <Input
                 type="date"
@@ -1218,14 +1194,14 @@ const BookingForm = () => {
           {formData.masterId && formData.appointmentDate && masterWorksOnSelectedDay && (
             <FormGroup>
               <Label>
-                <FaClock /> Vaqt *
+                <FaClock /> Vaqt tanlang
               </Label>
               <TimeSlotsContainer>
                 {availableTimes.map(time => (
                   <TimeSlot
                     key={time}
                     selected={formData.appointmentTime === time}
-                    onClick={() => handleTimeSelect(time)}
+                    onClick={() => setFormData(prev => ({ ...prev, appointmentTime: time }))}
                   >
                     <FaClock /> {time}
                   </TimeSlot>
@@ -1234,8 +1210,8 @@ const BookingForm = () => {
             </FormGroup>
           )}
           
-          <Button type="submit" disabled={loading || !masterWorksOnSelectedDay}>
-            {loading ? 'Yaratilmoqda...' : <><FaCheckCircle /> Buyurtma berish</>}
+          <Button type="submit" disabled={loading || !formData.appointmentTime}>
+            {loading ? 'Yuborilmoqda...' : 'Bron qilish'}
           </Button>
         </form>
       </BookingContainer>

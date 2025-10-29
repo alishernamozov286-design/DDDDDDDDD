@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-const BASE_URL ='https://backend-3-gtdh.onrender.com';
+const BASE_URL = 'https://backend-2-1-o1wi.onrender.com';
 
 const ManagementContainer = styled.div`
   padding: 20px;
@@ -342,7 +342,7 @@ const ServiceManagement = () => {
   const [services, setServices] = useState([]);
   const [formData, setFormData] = useState({ name: '', description: '', price: '', duration: '', image: '' });
   const [isEditing, setIsEditing] = useState(false);
-  const [editingId, setEditingId] = useState(null);
+  const [ editingId, setEditingId] = useState(null);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const [imageLoading, setImageLoading] = useState(false);

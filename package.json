@@ -21,7 +21,30 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "analyze": "npm run build && npx serve -s build",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write src/**/*.js",
+    "test:coverage": "react-scripts test --coverage --watchAll=false"
+  },
+  "keywords": [
+    "barbershop",
+    "booking",
+    "react",
+    "frontend",
+    "styled-components",
+    "responsive",
+    "modern-ui"
+  ],
+  "author": "Alisher Namozov",
+  "license": "MIT",
+  "homepage": "https://alishernamozov286-design.github.io/frontend",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alishernamozov286-design/frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alishernamozov286-design/frontend/issues"
   },
   "eslintConfig": {
     "extends": [
@@ -41,7 +64,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5002",
+  "proxy": "http://localhost:5001",
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.0",
     "@testing-library/react": "^16.3.0",
