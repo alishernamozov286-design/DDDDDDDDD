@@ -19,13 +19,14 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "npm run build && npx serve -s build",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write src/**/*.js",
-    "test:coverage": "react-scripts test --coverage --watchAll=false"
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "postbuild": "cp _redirects build/"
   },
   "keywords": [
     "barbershop",
